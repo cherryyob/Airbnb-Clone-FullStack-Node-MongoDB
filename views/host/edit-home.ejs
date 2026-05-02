@@ -1,0 +1,24 @@
+
+<%- include('../partial/head') %>
+</head>
+<body>
+ <%- include('../partial/nav') %>
+  <main class="container mx-auto mt-8 p-8 bg-white rounded-lg shadow-md">
+    <h1 class="text-3xl font-bold mb-6 text-center text-gray-800"><%=editing ? " Edit " : "Register" %> Your Home on AirBnB</h1>
+    <form action="/host/<%= editing ? `edit-home/${editHome._id}` :"add-home" %> " method="post" class="max-w-md mx-auto">
+      <input type="hidden" name="_id" value="<%=editing?editHome._id: null%>"/>
+    <input type="text" placeholder="enter your home name" name="homeName" value="<%=editing ? editHome.homeName : null %>"      class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+ />
+  <input type="text" placeholder="Price per night" name="price" value="<%=editing ?  editHome.price :null %>"       class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+ />
+  <input type="text" placeholder="Your Location" name="location"  value="<%=editing ? editHome.location: null %>"       class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+ />
+ <input type="text" placeholder="Your Rating" name="rating"    value="<%=editing ? editHome.rating : null%>"    class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+  />
+  <input type="text" placeholder="Image" name="photo" class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" value="<%= editing ? editHome.photo:null %>" />
+  <textarea placeholder="discrive your home" name="description" class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"><%= editing ? editHome.description:null %></textarea>
+    <input type="submit" class="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition duration-300"  value="<%= editing ?"Update Home":"Add Home"%>"/>
+    </form>
+  </main>
+</body>
+</html>

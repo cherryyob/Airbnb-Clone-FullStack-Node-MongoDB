@@ -1,0 +1,28 @@
+{
+  "name": "airbnp",
+  "version": "1.0.0",
+  "description": "airbnp project v1",
+  "license": "ISC",
+  "author": "gangesh jha",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tailwind": "tailwindcss -i ./views/input.css -o ./public/output.css --watch",
+    "server": "nodemon app.js",
+    "start": "npx concurrently \"npm run tailwind\" \"npm run server\""
+  },
+  "dependencies": {
+    "ejs": "^5.0.1",
+    "express.js": "^1.0.0",
+    "mongodb": "^7.2.0",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.22.1"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.27",
+    "nodemon": "^3.1.14",
+    "postcss": "^8.5.8",
+    "tailwindcss": "^3.4.19"
+  }
+}
