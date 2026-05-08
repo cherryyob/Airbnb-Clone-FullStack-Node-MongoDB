@@ -2,24 +2,66 @@
   <nav class="container mx-auto flex justify-between items-center">
     <ul class="flex space-x-4">
       <li>
-        <a href="/" class="<%=activePage==='home' ? 'bg-red-400':'hover:bg-red-400'%> py-2 px-4 rounded transition dura-300">airbnb</a>
+        <a
+          href="/"
+          class="<%=activePage==='home' ? 'bg-red-400':'hover:bg-red-400'%> py-2 px-4 rounded transition dura-300"
+          >airbnb</a
+        >
       </li>
-   
+      <% if(isLoggedIn){%>
       <li>
-        <a href="/bookings" class=" <%=activePage==='bookings' ? 'bg-red-400':'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300">Booking</a>
+        <a
+          href="/home-list"
+          class="<%=activePage==='homeList' ? 'bg-red-400':'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
+          >Home-List</a
+        >
       </li>
-       <li>
-        <a href="/home-list" class=" <%=activePage==='homeList' ? 'bg-red-400':'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300">Home-List</a>
+
+      <li>
+        <a
+          href="/bookings"
+          class="<%=activePage==='bookings' ? 'bg-red-400':'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
+          >Booking</a
+        >
+      </li>
+
+      <li>
+        <a
+          href="/favourate"
+          class="<%=activePage==='favourate' ? 'bg-red-400':'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
+          >Favourate</a
+        >
       </li>
       <li>
-        <a href="/favourate" class=" <%=activePage==='favourate' ? 'bg-red-400':'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300">Favourate</a>
+        <a
+          href="/host/host-home-list"
+          class="<%=activePage==='homeHostList' ? 'bg-red-400':'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
+          >Host Home</a
+        >
       </li>
-         <li>
-        <a href="/host/host-home-list" class=" <%=activePage==='homeHostList' ? 'bg-red-400':'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300">Host Home</a>
+      <li>
+        <a
+          href="/host/add-home"
+          class="<%=activePage==='add-Home' ? 'bg-red-400':'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
+          >Add Home</a
+        >
       </li>
-       <li>
-        <a href="/host/add-home" class=" <%=activePage==='add-Home' ? 'bg-red-400':'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300">Add Home</a>
+      <li>
+        <form  method="post" action="/logout" >
+          <button type="submit" class="<%=activePage==='add-Home' ? 'bg-red-400':'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300">LogOut</button>
+        </form>
       </li>
+      <% } %>
+      <% if(!isLoggedIn){%>
+      <li>
+        <a
+          class="<%=activePage==='add-Home' ? 'bg-red-400':'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
+          href="/login"
+          >Login</a
+        >
+      </li>
+      <% } %>
+       
     </ul>
   </nav>
-  </header>
+</header>

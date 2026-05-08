@@ -1,6 +1,34 @@
-const { ObjectId } = require("mongodb");
-const favourateModel = require("../models/favourate");
-const { getDB } = require("../utils/databaseUtil");
+const { default: mongoose } = require("mongoose");
+const favourate = require("./favourate");
+
+const homeSchema = mongoose.Schema({
+  homeName: { type: String, required: true },
+  price: { type: Number, required: true },
+  location: { type: String, required: true },
+  rating: { type: Number, required: true },
+  photo: { type: String, required: true },
+  description: { type: String },
+});
+
+homeSchema.pre("findOneAndDelete", async function () {
+  try {
+    const homeId = this.getQuery()._id;
+    console.log("homeId from pre hook : ", homeId);
+
+    await favourate.deleteMany({ homeId: homeId });
+  } catch (err) {
+    console.error(
+      "Error while deleting favourate documents related to the home:",
+      err,
+    );
+    throw err;
+  }
+});
+
+module.exports = mongoose.model("homeModel", homeSchema);
+
+/* 
+    
 
 ////////////////////////////////////////////////////////////////
 
@@ -44,7 +72,7 @@ module.exports = class homeModel {
     }
   }
 
-  static fatchAll(callback) {
+  static find(callback) {
     const db = getDB();
     return db.collection("homes").find().toArray();
   }
@@ -71,3 +99,4 @@ module.exports = class homeModel {
       });
   }
 };
+*/

@@ -13,6 +13,7 @@ exports.postHome = (req, res, next) => {
   homeM.save();
   res.render("host/homeAdded", {
     pageTitle: "Home Added",
+    isLoggedIn: req.session.isLoggedIn,
     activePage: "homeAdded",
   });
 };
@@ -23,6 +24,7 @@ exports.home = (req, res, next) => {
     res.render("store/homeList", {
       registorHome: registorHome,
       pageTitle: "home",
+      isLoggedIn: req.session.isLoggedIn,
       activePage: "home",
     });
   });
@@ -30,17 +32,21 @@ exports.home = (req, res, next) => {
 exports.bookings = (req, res, next) => {
   res.render("./store/bookings", {
     pageTitle: "Bookings",
+    isLoggedIn: req.session.isLoggedIn,
     activePage: "bookings",
   });
 };
 exports.homeDetails = (req, res, next) => {
   res.render("./store/home-detail", {
     pageTitle: "Home Details",
+    isLoggedIn: req.session.isLoggedIn,
     activePage: "home-details",
   });
 };
 exports.page404 = (req, res, next) => {
-  res
-    .status(404)
-    .render("404", { pageTitle: "Page not found", activePage: "404" });
+  res.status(404).render("404", {
+    pageTitle: "Page not found",
+    isLoggedIn: req.session.isLoggedIn,
+    activePage: "404",
+  });
 };

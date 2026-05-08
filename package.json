@@ -13,9 +13,12 @@
     "start": "npx concurrently \"npm run tailwind\" \"npm run server\""
   },
   "dependencies": {
+    "connect-mongodb-session": "^5.0.0",
     "ejs": "^5.0.1",
+    "express-session": "^1.19.0",
     "express.js": "^1.0.0",
     "mongodb": "^7.2.0",
+    "mongoose": "^9.6.1",
     "mysql": "^2.18.1",
     "mysql2": "^3.22.1"
   },
