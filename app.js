@@ -15,7 +15,7 @@ app.set("views", "views");
 app.use(express.static(path.join(rootDir, "public")));
 
 const MongoDbStore = require("connect-mongodb-session")(session);
-const pass = "cherRy78";
+const pass = "yourePsswrd";
 const URL = `mongodb://cherryyob:${pass}@ac-ejfildg-shard-00-00.gftiffm.mongodb.net:27017,ac-ejfildg-shard-00-01.gftiffm.mongodb.net:27017,ac-ejfildg-shard-00-02.gftiffm.mongodb.net:27017/airbnb?ssl=true&replicaSet=atlas-inztl9-shard-0&authSource=admin&appName=compliteCoding`;
 const store = new MongoDbStore({
   uri: URL,
