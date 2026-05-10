@@ -1,43 +1,90 @@
-<%-include('../partial/head') %>
+<%- include('../partial/head') %>
+<style>
+  /* Entrance animations */
+  @keyframes revealDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes revealUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-reveal-down { animation: revealDown 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+  .animate-reveal-up { animation: revealUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+</style>
 </head>
-<body>
+<body class="bg-gray-100">
   <%- include('../partial/nav') %>
-  <main class="container mx-auto bg-white shadow-lg rounded-lg p-8 mt-10 max-w-xl">
-  <h1 class="text-3xl text-red-500 font-bold text-center mb-6">Home LIst Are Here</h1>
-  
-  </main>
- 
-      <div class="container mx-auto bg-white shadow-lg rounded-lg p-8 mt-10 max-w-4xl">
-        <!-- Image Gallery -->
-        <div class="grid grid-cols-2 gap-4 mb-8">
-          <img src="<%= home.photo %> " class="col-span-2 h-96 object-cover rounded-lg" >
-        </div>
 
-        <!-- Title & Rating -->
-        <div class="flex justify-between items-start mb-6 border-b pb-4">
-          <div>
-            <h1 class="text-4xl font-bold text-gray-800"><%= home.homeName %></h1>
-            <p class="text-gray-600 mt-2"><%= home.location %> • <%= home.rating %> ⭐</p>
-          </div>
-          <p class="text-3xl font-bold text-red-500">$<%= home.price %>/night</p>
-        </div>
+  <main class="min-h-screen pt-28 pb-12 px-4 sm:px-8 font-sans max-w-6xl mx-auto">
+    
+    <div class="mb-8 animate-reveal-down">
+      <h1 class="text-4xl md:text-5xl font-black text-gray-900 tracking-tighter mb-2">
+        <%= home.homeName %>
+      </h1>
+      <div class="flex items-center gap-4 text-lg font-medium text-gray-600">
+        <span class="flex items-center gap-1">⭐ <%= home.rating %></span>
+        <span>•</span>
+        <span class="underline"><%= home.location %></span>
+      </div>
+    </div>
 
-        <!-- Description & Amenities -->
-        <div class="grid grid-cols-3 gap-8 mb-8">
-          <div class="col-span-2">
-            <h2 class="text-2xl font-bold mb-4">About this place</h2>
-            <p class="text-gray-700 mb-6"><%= home.description || 'Beautiful home awaiting your stay.' %></p>
-          </div>
-          <div class="bg-gray-50 rounded-lg p-6">
-            <button class="w-full bg-red-500 text-white py-3 rounded-lg font-bold hover:bg-red-600 mb-4">Book Now</button>
-          </div>
+    <div class="relative group overflow-hidden rounded-[3rem] shadow-2xl mb-10 animate-in fade-in zoom-in duration-1000">
+      <img src="<%= home.photo %>" alt="<%= home.homeName %>" 
+           class="w-full h-[30rem] md:h-[40rem] object-cover transition-transform duration-1000 group-hover:scale-105">
+      <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+      
+      <div class="lg:col-span-2 space-y-8 animate-reveal-up">
+        <div class="bg-white p-8 md:p-10 rounded-[2.5rem] shadow-xl border border-gray-100">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">About this place</h2>
+          <p class="text-gray-600 text-xl leading-relaxed">
+            <%= home.description || 'This beautiful home is perfectly situated to offer you the best experience. Every corner is designed for comfort and style.' %>
+          </p>
           
+          <div class="mt-10 pt-10 border-t border-gray-100 grid grid-cols-2 md:grid-cols-3 gap-6">
+            <div class="flex items-center gap-3 text-gray-700 font-bold">
+              <span class="bg-red-50 p-3 rounded-xl text-red-500 text-2xl">🏠</span> Entire Home
+            </div>
+            <div class="flex items-center gap-3 text-gray-700 font-bold">
+              <span class="bg-red-50 p-3 rounded-xl text-red-500 text-2xl">✨</span> Clean Stay
+            </div>
+            <div class="flex items-center gap-3 text-gray-700 font-bold">
+              <span class="bg-red-50 p-3 rounded-xl text-red-500 text-2xl">📍</span> Great Location
+            </div>
+          </div>
         </div>
-        <%-include('../partial/favourate.ejs') %>
-     
-    </main>
-    
-    
-  </div>
+      </div>
+
+      <div class="lg:col-span-1">
+        <div class="sticky top-28 space-y-4 animate-reveal-up" style="animation-delay: 0.2s">
+          <div class="bg-white p-8 rounded-[2.5rem] shadow-2xl border border-gray-100">
+            <div class="flex justify-between items-center mb-6">
+              <div>
+                <span class="text-4xl font-black text-red-500">$<%= home.price %></span>
+                <span class="text-gray-400 font-bold uppercase text-sm">/ night</span>
+              </div>
+              <div class="text-sm font-bold text-gray-800 bg-gray-50 px-3 py-1 rounded-full">
+                ⭐ <%= home.rating %>
+              </div>
+            </div>
+
+            <button class="w-full bg-red-500 text-white py-5 rounded-2xl font-black text-xl shadow-xl shadow-red-200 hover:bg-red-700 hover:-translate-y-1 active:scale-95 transition-all duration-300">
+              Book Now
+            </button>
+            
+            <p class="text-center text-gray-400 text-sm mt-4 font-medium">You won't be charged yet</p>
+          </div>
+
+          <div class="rounded-[2.5rem] overflow-hidden shadow-lg">
+            <%- include('../partial/favourate.ejs') %>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
 </body>
 </html>

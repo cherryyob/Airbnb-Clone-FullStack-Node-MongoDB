@@ -13,52 +13,86 @@
       body {
         font-family: "Plus Jakarta Sans", sans-serif;
       }
+      /* Smooth slide-in for the joke text */
+      @keyframes slideLeft {
+        from {
+          opacity: 0;
+          transform: translateX(-60px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+      .animate-joke {
+        opacity: 0;
+        animation: slideLeft 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      }
+      .delay-1 {
+        animation-delay: 0.1s;
+      }
+      .delay-2 {
+        animation-delay: 0.3s;
+      }
+      .delay-3 {
+        animation-delay: 0.5s;
+      }
     </style>
   </head>
   <body class="bg-[#f8f9fa]">
     <%- include('../partial/nav') %>
-    
+
     <div class="min-h-[calc(100vh-64px)] flex items-center justify-center p-6">
       <div
-        class="flex flex-col md:flex-row w-full max-w-5xl bg-white rounded-[30px] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-neutral-100"
+        class="flex flex-col md:flex-row w-full max-w-5xl bg-white rounded-[40px] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-neutral-100"
       >
         <div
-          class="hidden md:flex md:w-1/2 bg-red-500 p-12 flex-col justify-between relative overflow-hidden"
+          class="hidden md:flex md:w-1/2 bg-red-500 p-16 flex-col justify-between relative overflow-hidden"
         >
           <div
-            class="absolute top-0 right-0 w-64 h-64 bg-red-500 rounded-full mix-blend-screen filter blur-[80px] opacity-20 -mr-20 -mt-20"
+            class="absolute top-0 right-0 w-80 h-80 bg-white rounded-full mix-blend-overlay filter blur-[100px] opacity-20 -mr-32 -mt-32"
           ></div>
 
           <div class="relative z-10">
             <div
-              class="w-10 h-10 bg-white rounded-xl mb-8 flex items-center justify-center font-bold text-xl text-black"
+              class="w-12 h-12 bg-white rounded-2xl mb-12 flex items-center justify-center font-black text-2xl text-red-500 shadow-lg animate-joke delay-1"
             >
               S.
             </div>
-            <h2 class="text-4xl font-extrabold text-white leading-tight">
-              Design is the <br />silent ambassador <br />of your brand.
+
+            <h2
+              class="text-5xl font-extrabold text-white leading-[1.1] tracking-tighter italic animate-joke delay-2"
+            >
+              Forget your <br />password? <br />That's okay. <br />I forget why
+              I <br />walked into a <br />room every day. 🚪🚶‍♂️
             </h2>
           </div>
 
-          <div class="relative z-10 text-neutral-500 text-xs tracking-widest">
-            © 2026 CHERRYYOB INC.
+          <div
+            class="relative z-10 text-white/50 text-xs font-bold tracking-[0.2em] uppercase animate-joke delay-3"
+          >
+            The Human Side of Travel
           </div>
         </div>
 
-        <div class="w-full md:w-1/2 p-10 md:p-16 lg:p-20">
-          <div class="max-w-sm mx-auto">
-            <h3 class="text-3xl font-extrabold text-neutral-900 mb-2">
-              Sign In
-            </h3>
-            <p class="text-neutral-500 mb-10 text-sm">
-              Enter your details to access your workspace.
-            </p>
+        <div class="w-full md:w-1/2 p-10 md:p-16 lg:p-24 flex items-center">
+          <div class="w-full max-w-sm mx-auto">
+            <header class="mb-12">
+              <h3
+                class="text-4xl font-black text-neutral-900 mb-3 tracking-tight"
+              >
+                Sign In
+              </h3>
+              <p class="text-neutral-400 font-medium text-lg">
+                Welcome back, let's get you home.
+              </p>
+            </header>
 
-            <form action="/login" method="post" class="space-y-6">
-              <div>
+            <form action="/login" method="post" class="space-y-8">
+              <div class="group">
                 <label
                   for="emailId"
-                  class="block text-[10px] font-bold uppercase tracking-widest text-neutral-400 mb-2 ml-1"
+                  class="block text-[10px] font-black uppercase tracking-[0.15em] text-neutral-400 mb-3 ml-1"
                   >Email Address</label
                 >
                 <input
@@ -66,22 +100,21 @@
                   name="emailId"
                   id="emailId"
                   placeholder="name@company.com"
-                  /* MATCHED RED FOCUS: focus:ring-red-500 */
-                  class="w-full bg-neutral-50 border border-neutral-100 rounded-2xl px-5 py-4 text-neutral-900 focus:ring-2 focus:ring-red-500 outline-none transition-all placeholder:text-neutral-300"
+                  class="w-full bg-neutral-50 border border-neutral-100 rounded-2xl px-6 py-5 text-neutral-900 focus:ring-4 focus:ring-red-500/10 focus:border-red-500 outline-none transition-all duration-300 placeholder:text-neutral-300 hover:-translate-y-1 hover:shadow-lg hover:bg-white"
                   required
                 />
               </div>
 
               <div>
-                <div class="flex justify-between items-center mb-2 ml-1">
+                <div class="flex justify-between items-center mb-3 ml-1">
                   <label
                     for="password"
-                    class="block text-[10px] font-bold uppercase tracking-widest text-neutral-400"
+                    class="block text-[10px] font-black uppercase tracking-[0.15em] text-neutral-400"
                     >Password</label
                   >
                   <a
-                    href="#"
-                    class="text-[10px] font-bold text-red-500 uppercase tracking-tighter hover:text-red-600"
+                    href="/forgatePassword"
+                    class="text-[11px] font-black text-red-500 uppercase tracking-tight hover:text-red-700 transition-colors"
                     >Forgot?</a
                   >
                 </div>
@@ -90,27 +123,26 @@
                   name="password"
                   id="password"
                   placeholder="••••••••"
-                  /* MATCHED RED FOCUS: focus:ring-red-500 */
-                  class="w-full bg-neutral-50 border border-neutral-100 rounded-2xl px-5 py-4 text-neutral-900 focus:ring-2 focus:ring-red-500 outline-none transition-all placeholder:text-neutral-300"
+                  class="w-full bg-neutral-50 border border-neutral-100 rounded-2xl px-6 py-5 text-neutral-900 focus:ring-4 focus:ring-red-500/10 focus:border-red-500 outline-none transition-all duration-300 placeholder:text-neutral-300 hover:-translate-y-1 hover:shadow-lg hover:bg-white"
                   required
                 />
               </div>
 
               <button
                 type="submit"
-                class="w-full bg-red-500 hover:bg-red-700 text-white font-bold py-4 rounded-2xl shadow-xl transition-all duration-300 transform active:scale-95"
+                class="w-full bg-red-500 hover:bg-red-600 text-white font-black py-5 rounded-2xl shadow-2xl shadow-red-200 transition-all duration-300 transform active:scale-[0.98] text-lg hover:-translate-y-1 hover:shadow-red-300/50"
               >
                 Continue
               </button>
             </form>
 
             <div
-              class="mt-10 pt-8 border-t border-neutral-100 flex items-center justify-center"
+              class="mt-12 pt-8 border-t border-neutral-100 flex items-center justify-center"
             >
-              <span class="text-neutral-400 text-sm">New here?</span>
+              <span class="text-neutral-400 font-medium">New here?</span>
               <a
-                href="#"
-                class="ml-2 text-sm font-bold text-neutral-900 hover:text-red-500 transition-colors"
+                href="/signUp"
+                class="ml-2 font-black text-neutral-900 hover:text-red-500 transition-colors underline decoration-red-100 underline-offset-8 decoration-2"
                 >Create an account</a
               >
             </div>

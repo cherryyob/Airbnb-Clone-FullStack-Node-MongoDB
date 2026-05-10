@@ -1,24 +1,85 @@
-
 <%- include('../partial/head') %>
 </head>
-<body>
- <%- include('../partial/nav') %>
-  <main class="container mx-auto mt-8 p-8 bg-white rounded-lg shadow-md">
-    <h1 class="text-3xl font-bold mb-6 text-center text-gray-800"><%=editing ? " Edit " : "Register" %> Your Home on AirBnB</h1>
-    <form action="/host/<%= editing ? `edit-home/${editHome._id}` :"add-home" %> " method="post" class="max-w-md mx-auto">
-      <input type="hidden" name="_id" value="<%=editing?editHome._id: null%>"/>
-    <input type="text" placeholder="enter your home name" name="homeName" value="<%=editing ? editHome.homeName : null %>"      class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
- />
-  <input type="text" placeholder="Price per night" name="price" value="<%=editing ?  editHome.price :null %>"       class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
- />
-  <input type="text" placeholder="Your Location" name="location"  value="<%=editing ? editHome.location: null %>"       class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
- />
- <input type="text" placeholder="Your Rating" name="rating"    value="<%=editing ? editHome.rating : null%>"    class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
-  />
-  <input type="text" placeholder="Image" name="photo" class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" value="<%= editing ? editHome.photo:null %>" />
-  <textarea placeholder="discrive your home" name="description" class="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"><%= editing ? editHome.description:null %></textarea>
-    <input type="submit" class="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600 transition duration-300"  value="<%= editing ?"Update Home":"Add Home"%>"/>
-    </form>
+<body class="bg-gray-100">
+  <%- include('../partial/nav') %>
+
+  <main class="min-h-screen pt-28 pb-12 flex items-center justify-center px-4 sm:px-6 lg:px-8 font-sans">
+    
+    <div class="flex flex-col md:flex-row w-full max-w-6xl bg-white shadow-2xl rounded-[3rem] overflow-hidden border border-gray-100 animate-in fade-in zoom-in duration-500">
+      
+      <div class="hidden md:flex md:w-5/12 bg-red-500 items-center justify-center p-12 text-white relative">
+        <div class="z-10 animate-in slide-in-from-left duration-700">
+          <h1 class="text-5xl font-extrabold mb-6 italic">
+            <%= editing ? "Refine Your Space" : "Share Your Home" %>
+          </h1>
+          <p class="text-xl text-red-100 max-w-md leading-relaxed">
+            <%= editing ? "Keep your listing fresh and attractive to guests." : "Start your hosting journey and reach travelers from all over the world." %>
+          </p>
+        </div>
+        <div class="absolute top-0 right-0 w-40 h-40 bg-red-400 rounded-bl-full opacity-40"></div>
+        <div class="absolute bottom-0 left-0 w-72 h-72 bg-red-600 rounded-tr-full opacity-30"></div>
+      </div>
+
+      <div class="w-full md:w-7/12 p-8 md:p-14 bg-white overflow-y-auto">
+        <div class="w-full max-w-xl mx-auto">
+          
+          <div class="mb-10 text-left">
+            <h2 class="text-4xl font-bold text-gray-900 mb-2">
+                <%= editing ? "Edit Listing" : "Register Home" %>
+            </h2>
+            <p class="text-gray-500 text-lg">Enter the details of your beautiful space.</p>
+          </div>
+
+          <form action="/host/<%= editing ? `edit-home/${editHome._id}` : 'add-home' %>" method="post" class="space-y-5">
+            <input type="hidden" name="_id" value="<%= editing ? editHome._id : null %>"/>
+
+            <div class="group">
+              <label class="block text-sm font-bold text-gray-700 mb-2">Home Name</label>
+              <input type="text" placeholder="e.g. Cozy Beachfront Villa" name="homeName" value="<%= editing ? editHome.homeName : '' %>" 
+                class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none transition-all duration-300 hover:shadow-xl hover:-translate-y-1 focus:border-red-500 focus:ring-4 focus:ring-red-500/10 bg-white">
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div class="group">
+                <label class="block text-sm font-bold text-gray-700 mb-2">Price per Night</label>
+                <input type="text" placeholder="0.00" name="price" value="<%= editing ? editHome.price : '' %>" 
+                  class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none transition-all duration-300 hover:shadow-xl hover:-translate-y-1 focus:border-red-500 focus:ring-4 focus:ring-red-500/10 bg-white">
+              </div>
+              <div class="group">
+                <label class="block text-sm font-bold text-gray-700 mb-2">Location</label>
+                <input type="text" placeholder="City, Country" name="location" value="<%= editing ? editHome.location : '' %>" 
+                  class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none transition-all duration-300 hover:shadow-xl hover:-translate-y-1 focus:border-red-500 focus:ring-4 focus:ring-red-500/10 bg-white">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div class="group">
+                <label class="block text-sm font-bold text-gray-700 mb-2">Initial Rating</label>
+                <input type="text" placeholder="1-5" name="rating" value="<%= editing ? editHome.rating : '' %>" 
+                  class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none transition-all duration-300 hover:shadow-xl hover:-translate-y-1 focus:border-red-500 focus:ring-4 focus:ring-red-500/10 bg-white">
+              </div>
+              <div class="group">
+                <label class="block text-sm font-bold text-gray-700 mb-2">Photo URL</label>
+                <input type="text" placeholder="https://..." name="photo" value="<%= editing ? editHome.photo : '' %>" 
+                  class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none transition-all duration-300 hover:shadow-xl hover:-translate-y-1 focus:border-red-500 focus:ring-4 focus:ring-red-500/10 bg-white">
+              </div>
+            </div>
+
+            <div class="group">
+              <label class="block text-sm font-bold text-gray-700 mb-2">Description</label>
+              <textarea placeholder="Describe what makes your home special..." name="description" rows="4"
+                class="w-full px-5 py-4 rounded-2xl border border-gray-200 outline-none transition-all duration-300 hover:shadow-xl hover:-translate-y-1 focus:border-red-500 focus:ring-4 focus:ring-red-500/10 bg-white"><%= editing ? editHome.description : '' %></textarea>
+            </div>
+
+            <button type="submit" 
+              class="w-full bg-red-500 hover:bg-red-700 text-white font-black py-5 rounded-[2rem] shadow-xl shadow-red-500/30 transform transition-all active:scale-95 duration-200 text-xl tracking-wide mt-4">
+              <%= editing ? "Update Listing" : "Add Your Home" %>
+            </button>
+          </form>
+
+        </div>
+      </div>
+    </div>
   </main>
 </body>
 </html>

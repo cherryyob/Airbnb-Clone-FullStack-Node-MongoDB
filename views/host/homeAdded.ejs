@@ -1,14 +1,53 @@
 <%- include('../partial/head') %>
+<style>
+  @keyframes scaleIn {
+    0% { transform: scale(0); opacity: 0; }
+    60% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .animate-success {
+    animation: scaleIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+</style>
 </head>
-<body>
-<%-include('../partial/nav') %>
-   <main class="container mx-auto mt-8 p-4">
-      <div class="bg-white shadow-md rounded-lg p-6 text-center">
-        <h1 class="text-3xl font-bold text-red-500 mb-4">Home Registered Successfully</h1>
-        <p class="text-lg text-gray-600">Your home has been added to our listings.</p>
-        <a href="/" class="inline-block mt-6 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-400 transition duration-300">Return to Home</a>
-      </div>
-    </main>
+<body class="bg-gray-100">
+  <%- include('../partial/nav') %>
 
+  <main class="min-h-screen pt-28 pb-12 flex items-center justify-center px-4 font-sans">
+    <div class="w-full max-w-2xl bg-white shadow-2xl rounded-[3.5rem] overflow-hidden border border-gray-100 p-10 md:p-20 text-center animate-in fade-in zoom-in duration-700">
+      
+      <div class="flex justify-center mb-8">
+        <div class="w-24 h-24 bg-green-100 text-green-500 rounded-full flex items-center justify-center animate-success shadow-lg shadow-green-100">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <h1 class="text-4xl md:text-5xl font-black text-gray-900 tracking-tight">
+          Woohoo! 🎉
+        </h1>
+        <h2 class="text-2xl font-bold text-red-500">Home Registered Successfully</h2>
+        <p class="text-gray-500 text-lg max-w-md mx-auto leading-relaxed">
+          Your beautiful space has been added to our listings. Guests can now find and book your home!
+        </p>
+      </div>
+
+      <div class="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/host/host-home-list" 
+          class="inline-block bg-gray-900 text-white font-bold py-4 px-8 rounded-2xl shadow-xl hover:bg-gray-800 hover:-translate-y-1 active:scale-95 transition-all duration-300">
+          View My Listings
+        </a>
+        <a href="/" 
+          class="inline-block bg-red-500 text-white font-bold py-4 px-10 rounded-2xl shadow-xl shadow-red-200 hover:bg-red-700 hover:-translate-y-1 active:scale-95 transition-all duration-300">
+          Return to Home
+        </a>
+      </div>
+
+      
+    </div>
+  </main>
+  
 </body>
 </html>

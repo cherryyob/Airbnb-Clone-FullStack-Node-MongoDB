@@ -1,38 +1,82 @@
-<%-include('../partial/head') %>
+<%- include('../partial/head') %>
+<style>
+  /* Premium staggered entrance animation */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fav-card {
+    opacity: 0;
+    animation: fadeInUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+</style>
 </head>
-<body>
+<body class="bg-gray-100">
   <%- include('../partial/nav') %>
-  <main class="container mx-auto bg-white shadow-lg rounded-lg p-8 mt-10 max-w-xl">
-  <h1 class="text-3xl text-red-500 font-bold text-center mb-6">Favourate Homes Are Here</h1>
   
-  </main>
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8 mx-1">
-    <% registorHome.forEach((home) => { %>
-      <div class="bg-white rounded-lg mx-1 shadow-lg hover:shadow-xl hover:bg-red-50 transition-colors  duration-200 overflow-hidden border border-gray-300">
-      <a href="/home-details/<%=home._id%>">
-        <img src="<%= home.photo %>" alt="<%= home.homeName %>" class="w-full h-48 object-cover" loading="lazy">
-       </a>
-       
-          <div class="p-4">
-          <h2 class="text-lg font-bold text-gray-800 mb-2"><%= home.homeName %></h2>
-          <p class="text-gray-600 text-sm mb-1"><strong></strong> <%= home.location %></p>
-          <p class="text-gray-600 text-sm mb-2"><strong></strong> <%= home.rating %> ⭐</p>
-          <div class="flex items-center justify-between ">
-            <p class="text-red-500 font-bold text-lg"><strong>$<%= home.price %></strong></p>
-             <div class="flex items-center justify-between ">
-              <form action="/remove-favourate/<%=home._id%>" method="post">
-                
-                 <button type="submit" class="bg-red-400 rounded-lg py-1 px-4 font-bold hover:bg-red-500 hover:text-lg transition-all inline-block duration-100 ">Remove</button>
-             
-              </form>
-              <button class="bg-red-400 rounded-lg py-1 px-4 font-bold hover:bg-red-500 hover:text-lg transition-all inline-block duration-100 ml-2">Book</button>
+  <main class="min-h-screen pt-28 pb-12 px-4 sm:px-8 font-sans">
+    
+    <div class="max-w-4xl mx-auto bg-white/80 backdrop-blur-md shadow-xl rounded-[2.5rem] p-10 mb-16 text-center border border-white animate-in fade-in slide-in-from-top-8 duration-1000">
+      <h1 class="text-5xl md:text-6xl font-black text-red-500 italic tracking-tighter mb-3">
+        Favourate Homes Are Here
+      </h1>
+      <p class="text-gray-500 text-xl font-medium">The places you loved the most, all in one spot.</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 max-w-7xl mx-auto">
+      <% registorHome.forEach((home, index) => { %>
+        <div class="fav-card bg-white rounded-[3rem] shadow-lg overflow-hidden border border-gray-100 group transition-all duration-500 hover:shadow-2xl hover:-translate-y-3" 
+             style="animation-delay: <%= index %>00ms">
+          
+          <div class="relative overflow-hidden h-64">
+            <a href="/home-details/<%=home._id%>">
+              <img src="<%= home.photo %>" alt="<%= home.homeName %>" 
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy">
+            </a>
+            <div class="absolute top-5 right-5 bg-red-500 text-white p-2 rounded-full shadow-lg transform transition-transform group-hover:scale-110">
+               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                 <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+               </svg>
             </div>
           </div>
-        
           
+          <div class="p-8">
+            <div class="flex justify-between items-start mb-2">
+              <h2 class="text-2xl font-black text-gray-900 leading-tight group-hover:text-red-500 transition-colors">
+                <%= home.homeName %>
+              </h2>
+              <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-bold">
+                <%= home.rating %> ⭐
+              </span>
+            </div>
+            
+            <p class="text-gray-500 font-medium mb-6 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              </svg>
+              <%= home.location %>
+            </p>
+            
+            <div class="mb-6">
+               <span class="text-3xl font-black text-red-500">$<%= home.price %></span>
+               <span class="text-gray-400 text-sm font-bold uppercase tracking-widest">/ night</span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <form action="/remove-favourate/<%= home._id %>" method="post">
+                <button type="submit" class="w-full bg-gray-100 text-gray-700 font-bold py-3 rounded-2xl hover:bg-red-50 hover:text-red-500 transition-all duration-300 active:scale-95">
+                  Remove
+                </button>
+              </form>
+              
+              <button class="bg-red-500 text-white font-bold py-3 rounded-2xl shadow-lg shadow-red-100 hover:bg-red-700 hover:-translate-y-1 active:scale-95 transition-all duration-300">
+                Book Now
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
-    <% }) %>
-  </div>
+      <% }) %>
+    </div>
+  </main>
 </body>
 </html>

@@ -1,67 +1,73 @@
-<header class="bg-red-500 text-white p-4 shadow-md">
-  <nav class="container mx-auto flex justify-between items-center">
-    <ul class="flex space-x-4">
+<header class="fixed top-0 left-0 w-full z-[100] bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm animate-in slide-in-from-top duration-500">
+  <nav class="container mx-auto px-4 h-20 flex justify-between items-center">
+    
+    <div class="flex items-center">
+      <a href="/" class="text-3xl font-extrabold text-red-500 hover:scale-110 transition-transform duration-300 ease-out italic">
+        airbnb
+      </a>
+    </div>
+
+    <ul class="flex space-x-1 items-center">
       <li>
-        <a
-          href="/"
-          class="<%=activePage==='home' ? 'bg-red-400':'hover:bg-red-400'%> py-2 px-4 rounded transition dura-300"
-          >airbnb</a
-        >
+        <a href="/" class="py-2 px-4 rounded-full transition-all duration-300 block hover:-translate-y-1 <%=activePage==='home' ? 'bg-red-500 text-white shadow-md':'hover:bg-gray-100 text-gray-700'%>">
+          Home
+        </a>
       </li>
+
       <% if(isLoggedIn){%>
-      <li>
-        <a
-          href="/home-list"
-          class="<%=activePage==='homeList' ? 'bg-red-400':'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
-          >Home-List</a
-        >
-      </li>
+        <li>
+          <a href="/home-list" class="py-2 px-4 rounded-full transition-all duration-300 block hover:-translate-y-1 <%=activePage==='homeList' ? 'bg-red-500 text-white shadow-md':'hover:bg-gray-100 text-gray-700' %>">
+            Home-List
+          </a>
+        </li>
 
-      <li>
-        <a
-          href="/bookings"
-          class="<%=activePage==='bookings' ? 'bg-red-400':'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
-          >Booking</a
-        >
-      </li>
+        <li>
+          <a href="/bookings" class="py-2 px-4 rounded-full transition-all duration-300 block hover:-translate-y-1 <%=activePage==='bookings' ? 'bg-red-500 text-white shadow-md':'hover:bg-gray-100 text-gray-700' %>">
+            Booking
+          </a>
+        </li>
 
-      <li>
-        <a
-          href="/favourate"
-          class="<%=activePage==='favourate' ? 'bg-red-400':'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
-          >Favourate</a
-        >
-      </li>
-      <li>
-        <a
-          href="/host/host-home-list"
-          class="<%=activePage==='homeHostList' ? 'bg-red-400':'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
-          >Host Home</a
-        >
-      </li>
-      <li>
-        <a
-          href="/host/add-home"
-          class="<%=activePage==='add-Home' ? 'bg-red-400':'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
-          >Add Home</a
-        >
-      </li>
-      <li>
-        <form  method="post" action="/logout" >
-          <button type="submit" class="<%=activePage==='add-Home' ? 'bg-red-400':'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300">LogOut</button>
-        </form>
-      </li>
+        <li>
+          <a href="/favourate" class="py-2 px-4 rounded-full transition-all duration-300 block hover:-translate-y-1 <%=activePage==='favourate' ? 'bg-red-500 text-white shadow-md':'hover:bg-gray-100 text-gray-700' %>">
+            Favourate
+          </a>
+        </li>
+
+        <li>
+          <a href="/host/host-home-list" class="py-2 px-4 rounded-full transition-all duration-300 block hover:-translate-y-1 <%=activePage==='homeHostList' ? 'bg-red-500 text-white shadow-md':'hover:bg-gray-100 text-gray-700' %>">
+            Host Home
+          </a>
+        </li>
+
+        <li>
+          <a href="/host/add-home" class="py-2 px-4 rounded-full transition-all duration-300 block hover:-translate-y-1 <%=activePage==='add-Home' ? 'bg-red-500 text-white shadow-md':'hover:bg-gray-100 text-gray-700' %>">
+            Add Home
+          </a>
+        </li>
+
+        <li>
+          <form method="post" action="/logout" class="inline">
+            <button type="submit" class="py-2 px-6 rounded-full transition-all duration-300 block hover:-translate-y-1 <%=activePage==='login' ? 'bg-red-500 text-white shadow-md':'hover:bg-gray-100 text-gray-700' %>">
+              LogOut
+            </button>
+          </form>
+        </li>
       <% } %>
+
       <% if(!isLoggedIn){%>
-      <li>
-        <a
-          class="<%=activePage==='add-Home' ? 'bg-red-400':'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
-          href="/login"
-          >Login</a
-        >
-      </li>
+        <li>
+          <a href="/login" class="py-2 px-6 rounded-full transition-all duration-300 block hover:-translate-y-1 <%=activePage==='login' ? 'bg-red-500 text-white shadow-md':'hover:bg-gray-100 text-gray-700' %>">
+            Login
+          </a>
+        </li>
+        <li>
+          <a href="/singup"  class="py-2 px-6 rounded-full transition-all duration-300 block hover:-translate-y-1 <%=activePage==='singup' ? 'bg-red-500 text-white shadow-md':'hover:bg-gray-100 text-gray-700' %>">
+            SingUp
+          </a>
+        </li>
       <% } %>
-       
     </ul>
   </nav>
 </header>
+
+<div class="h-20"></div>
