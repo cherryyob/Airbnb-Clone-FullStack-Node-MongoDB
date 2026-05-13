@@ -7,6 +7,7 @@ exports.getHome = (req, res, next) => {
     activePage: "add-Home",
     isLoggedIn: req.session.isLoggedIn,
     editing: false,
+    user: req.session.user,
   });
 };
 
@@ -29,6 +30,7 @@ exports.postHome = (req, res, next) => {
         pageTitle: "Home Added",
         isLoggedIn: req.session.isLoggedIn,
         activePage: "homeAdded",
+        user: req.session.user,
       });
     })
     .catch((err) => {
@@ -65,6 +67,7 @@ exports.postEditHome = (req, res, next) => {
     pageTitle: "Edit Home",
     isLoggedIn: req.session.isLoggedIn,
     activePage: "homeHostList",
+    user: req.session.user,
   });
 };
 exports.postPostDelete = (req, res, next) => {
@@ -92,6 +95,7 @@ exports.getEditHome = (req, res, next) => {
         pageTitle: "Edit Home",
         isLoggedIn: req.session.isLoggedIn,
         activePage: "Host Home",
+        user: req.session.user,
       });
     }
   });
@@ -104,6 +108,7 @@ exports.hostHomeList = (req, res, next) => {
       pageTitle: "Host Home List",
       isLoggedIn: req.session.isLoggedIn,
       activePage: "homeHostList",
+      user: req.session.user,
     });
   });
 };

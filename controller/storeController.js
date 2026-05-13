@@ -6,6 +6,7 @@ exports.getHome = (req, res, next) => {
     pageTitle: "Add Home",
     isLoggedIn: req.session.isLoggedIn,
     activePage: "add-Home",
+    user: req.session.user,
   });
 };
 
@@ -18,6 +19,7 @@ exports.home = (req, res, next) => {
         pageTitle: "home",
         isLoggedIn: req.session.isLoggedIn,
         activePage: "home",
+        user: req.session.user,
       });
     })
     .catch((err) => {
@@ -30,6 +32,7 @@ exports.bookings = (req, res, next) => {
     pageTitle: "Bookings",
     isLoggedIn: req.session.isLoggedIn,
     activePage: "bookings",
+    user: req.session.user,
   });
 };
 exports.homeDetails = (req, res, next) => {
@@ -46,6 +49,7 @@ exports.homeDetails = (req, res, next) => {
         pageTitle: "Home Details",
         isLoggedIn: req.session.isLoggedIn,
         activePage: "home-details",
+        user: req.session.user,
       });
     }
   });
@@ -89,6 +93,7 @@ exports.favourate = (req, res, next) => {
         pageTitle: "Favorate",
         isLoggedIn: req.session.isLoggedIn,
         activePage: "favourate",
+        user: req.session.user,
       });
     });
 };
@@ -100,6 +105,7 @@ exports.homeList = (req, res, next) => {
       pageTitle: "home List",
       isLoggedIn: req.session.isLoggedIn,
       activePage: "homeList",
+      user: req.session.user,
     });
   });
 };

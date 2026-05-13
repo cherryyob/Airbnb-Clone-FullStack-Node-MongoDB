@@ -40,7 +40,15 @@ app.use("/host", hostRouter);
 
 app.use(errorRouter);
 const port = 3000;
-
+app.use((error, req, res, next) => {
+  console.log("Global Error Handler Log:", error.message);
+  const status = error.httpStatusCode || 500;
+  res.status(status).render("500", {
+    pageTitle: "Error",
+    path: "/500",
+    isloggedIn: req.session.isloggedIn,
+  });
+});
 mongoose
   .connect(URL)
   .then((rsl) => {

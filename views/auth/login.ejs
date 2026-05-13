@@ -77,6 +77,7 @@
 
         <div class="w-full md:w-1/2 p-10 md:p-16 lg:p-24 flex items-center">
           <div class="w-full max-w-sm mx-auto">
+            <%-include("../partial/errors") %>
             <header class="mb-12">
               <h3
                 class="text-4xl font-black text-neutral-900 mb-3 tracking-tight"
@@ -100,6 +101,7 @@
                   name="emailId"
                   id="emailId"
                   placeholder="name@company.com"
+                  value="<%= oldInput ? oldInput :'' %>"
                   class="w-full bg-neutral-50 border border-neutral-100 rounded-2xl px-6 py-5 text-neutral-900 focus:ring-4 focus:ring-red-500/10 focus:border-red-500 outline-none transition-all duration-300 placeholder:text-neutral-300 hover:-translate-y-1 hover:shadow-lg hover:bg-white"
                   required
                 />

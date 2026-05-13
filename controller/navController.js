@@ -4,6 +4,7 @@ exports.getHome = (req, res, next) => {
   res.render("host/addHome", {
     pageTitle: "Add Home",
     activePage: "add-Home",
+    user: req.session.user,
   });
 };
 
@@ -15,6 +16,7 @@ exports.postHome = (req, res, next) => {
     pageTitle: "Home Added",
     isLoggedIn: req.session.isLoggedIn,
     activePage: "homeAdded",
+    user: req.session.user,
   });
 };
 
@@ -26,6 +28,7 @@ exports.home = (req, res, next) => {
       pageTitle: "home",
       isLoggedIn: req.session.isLoggedIn,
       activePage: "home",
+      user: req.session.user,
     });
   });
 };
@@ -34,6 +37,7 @@ exports.bookings = (req, res, next) => {
     pageTitle: "Bookings",
     isLoggedIn: req.session.isLoggedIn,
     activePage: "bookings",
+    user: req.session.user,
   });
 };
 exports.homeDetails = (req, res, next) => {
@@ -41,6 +45,7 @@ exports.homeDetails = (req, res, next) => {
     pageTitle: "Home Details",
     isLoggedIn: req.session.isLoggedIn,
     activePage: "home-details",
+    user: req.session.user,
   });
 };
 exports.page404 = (req, res, next) => {
@@ -48,5 +53,6 @@ exports.page404 = (req, res, next) => {
     pageTitle: "Page not found",
     isLoggedIn: req.session.isLoggedIn,
     activePage: "404",
+    user: req.session.user,
   });
 };

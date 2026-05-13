@@ -10,45 +10,47 @@
     <ul class="flex space-x-1 items-center">
       <li>
         <a href="/" class="py-2 px-4 rounded-full transition-all duration-300 block hover:-translate-y-1 <%=activePage==='home' ? 'bg-red-500 text-white shadow-md':'hover:bg-gray-100 text-gray-700'%>">
-          Home
+          🏠 Home
         </a>
       </li>
 
       <% if(isLoggedIn){%>
+        <%if(user.userType==='guest'){%>
         <li>
           <a href="/home-list" class="py-2 px-4 rounded-full transition-all duration-300 block hover:-translate-y-1 <%=activePage==='homeList' ? 'bg-red-500 text-white shadow-md':'hover:bg-gray-100 text-gray-700' %>">
-            Home-List
+            🏡 Home-List
           </a>
         </li>
 
         <li>
           <a href="/bookings" class="py-2 px-4 rounded-full transition-all duration-300 block hover:-translate-y-1 <%=activePage==='bookings' ? 'bg-red-500 text-white shadow-md':'hover:bg-gray-100 text-gray-700' %>">
-            Booking
+            📅 Booking
           </a>
         </li>
 
         <li>
           <a href="/favourate" class="py-2 px-4 rounded-full transition-all duration-300 block hover:-translate-y-1 <%=activePage==='favourate' ? 'bg-red-500 text-white shadow-md':'hover:bg-gray-100 text-gray-700' %>">
-            Favourate
+            ❤️ Favourate
           </a>
         </li>
-
+      <%}%>
+      <%if(user.userType==='host') {%>
         <li>
           <a href="/host/host-home-list" class="py-2 px-4 rounded-full transition-all duration-300 block hover:-translate-y-1 <%=activePage==='homeHostList' ? 'bg-red-500 text-white shadow-md':'hover:bg-gray-100 text-gray-700' %>">
-            Host Home
+            👤 Host Home
           </a>
         </li>
 
         <li>
           <a href="/host/add-home" class="py-2 px-4 rounded-full transition-all duration-300 block hover:-translate-y-1 <%=activePage==='add-Home' ? 'bg-red-500 text-white shadow-md':'hover:bg-gray-100 text-gray-700' %>">
-            Add Home
+            ➕ Add Home
           </a>
         </li>
-
+       <%}%>
         <li>
           <form method="post" action="/logout" class="inline">
             <button type="submit" class="py-2 px-6 rounded-full transition-all duration-300 block hover:-translate-y-1 <%=activePage==='login' ? 'bg-red-500 text-white shadow-md':'hover:bg-gray-100 text-gray-700' %>">
-              LogOut
+              🚪 LogOut
             </button>
           </form>
         </li>
@@ -57,12 +59,12 @@
       <% if(!isLoggedIn){%>
         <li>
           <a href="/login" class="py-2 px-6 rounded-full transition-all duration-300 block hover:-translate-y-1 <%=activePage==='login' ? 'bg-red-500 text-white shadow-md':'hover:bg-gray-100 text-gray-700' %>">
-            Login
+            🔐 Login
           </a>
         </li>
         <li>
           <a href="/singup"  class="py-2 px-6 rounded-full transition-all duration-300 block hover:-translate-y-1 <%=activePage==='singup' ? 'bg-red-500 text-white shadow-md':'hover:bg-gray-100 text-gray-700' %>">
-            SingUp
+            📝 SingUp
           </a>
         </li>
       <% } %>
