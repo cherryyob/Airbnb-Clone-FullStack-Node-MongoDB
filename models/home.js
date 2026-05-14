@@ -1,5 +1,5 @@
 const { default: mongoose } = require("mongoose");
-const favourate = require("./favourate");
+const User = require("./User");
 
 const homeSchema = mongoose.Schema({
   homeName: { type: String, required: true },
@@ -15,13 +15,18 @@ homeSchema.pre("findOneAndDelete", async function () {
     const homeId = this.getQuery()._id;
     console.log("homeId from pre hook : ", homeId);
 
-    await favourate.deleteMany({ homeId: homeId });
+    await User.updateMany(
+      { favourate: homeId },
+      {
+        $pull: { favourate: homeId },
+      },
+    );
   } catch (err) {
     console.error(
       "Error while deleting favourate documents related to the home:",
       err,
     );
-    throw err;
+    next(err);
   }
 });
 

@@ -1,5 +1,6 @@
 const homeModel = require("../models/home");
 const favourateModel = require("../models/favourate");
+const UserModel = require("../models/User");
 
 exports.getHome = (req, res, next) => {
   res.render("host/addHome", {
@@ -54,48 +55,58 @@ exports.homeDetails = (req, res, next) => {
     }
   });
 };
-exports.addToFavourate = (req, res, next) => {
-  const homeId = req.body.postId;
-
-  const fav = new favourateModel({ homeId: homeId });
-  fav
-    .save()
-    .then((savedData) => {
-      console.log("Favourate saved : ", savedData);
+exports.addToFavourate = async (req, res, next) => {
+  try {
+    const sessionId = req.session.user.id;
+    const homeId = req.body.postId;
+    const userDocument = await UserModel.findByIdAndUpdate(
+      { _id: sessionId },
+      {
+        $addToSet: { favourate: homeId },
+        new: true,
+      },
+    );
+    if (userDocument.modifiedCount > 0) {
       res.redirect("/favourate");
-    })
-    .catch((err) => {
-      if (err.code === 11000) {
-        console.log("Error Dublicate homeId");
-        res.redirect("/home-list");
-      } else {
-        console.log("Other Error:", err);
-        res.status(500).send("Internal Server Error");
-      }
-    });
+    } else {
+      console.log(userDocument, "document");
+      res.redirect("/home-list");
+    }
+  } catch (err) {
+    console.error("Error adding to favourite", err);
+    res.status(500).send("server Error");
+  }
 };
-exports.postRemoveFavourate = (req, res, next) => {
+exports.postRemoveFavourate = async (req, res, next) => {
   const id = req.params.homeId;
-  favourateModel.findOneAndDelete({ homeId: id }).then((rst) => {
-    console.log("delete result : ", rst, "id is ", id);
-    res.redirect("/favourate");
-  });
-};
-exports.favourate = (req, res, next) => {
-  favourateModel
-    .find()
-    .populate("homeId")
-    .then((homes) => {
-      const homeNew = homes.map((home) => home.homeId);
+  const sessionId = req.session.user.id;
+  try {
+    const deleteResults = await UserModel.findOneAndUpdate(
+      { _id: sessionId },
+      {
+        $pull: {
+          favourate: id,
+        },
+      },
 
-      res.render("store/favourate", {
-        registorHome: homeNew,
-        pageTitle: "Favorate",
-        isLoggedIn: req.session.isLoggedIn,
-        activePage: "favourate",
-        user: req.session.user,
-      });
-    });
+      { new: true },
+    );
+    res.redirect("/favourate");
+  } catch (err) {
+    console.error("Error while remooving home from fav list:", err);
+    next(err);
+  }
+};
+exports.favourate = async (req, res, next) => {
+  const sessionId = req.session.user.id;
+  const userId = await UserModel.findById(sessionId).populate("favourate");
+  res.render("store/favourate", {
+    registorHome: userId.favourate,
+    pageTitle: "Favorate",
+    isLoggedIn: req.session.isLoggedIn,
+    activePage: "favourate",
+    user: req.session.user,
+  });
 };
 
 exports.homeList = (req, res, next) => {
