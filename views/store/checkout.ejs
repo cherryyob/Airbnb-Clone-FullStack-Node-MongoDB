@@ -1,0 +1,188 @@
+<%- include('../partial/head') %>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased">
+  <%- include('../partial/nav') %>
+  <main class="max-w-6xl mx-auto px-4 py-10 md:py-16">
+    <h1 class="text-3xl font-bold mb-8 text-gray-900">Confirm and pay</h1>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      
+      <div class="lg:col-span-7 space-y-8">
+        
+        <section class="border-b border-gray-200 pb-6">
+          <h2 class="text-2xl font-semibold mb-4">Your trip</h2>
+          <div class="flex justify-between items-start py-3">
+            <div>
+              <p class="font-medium text-gray-900">Dates</p>
+              <p class="text-gray-600 text-sm">May 31 – Jun 05, 2026</p>
+            </div>
+            <button class="text-sm font-semibold underline text-black hover:text-gray-600 transition">Edit</button>
+          </div>
+          <div class="flex justify-between items-start py-3">
+            <div>
+              <p class="font-medium text-gray-900">Guests</p>
+              <p class="text-gray-600 text-sm">1 guest</p>
+            </div>
+            <button class="text-sm font-semibold underline text-black hover:text-gray-600 transition">Edit</button>
+          </div>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-semibold mb-4">Choose how to pay</h2>
+          
+         <form class="space-y-4">
+  <label class="payment-option border border-gray-200 rounded-xl p-4 flex items-start justify-between cursor-pointer bg-white transition-all duration-200 transform hover:-translate-y-1 hover:shadow-md block">
+    <div class="flex gap-3">
+      <input type="radio" name="payment_method" value="card" checked class="mt-1 accent-black h-4 w-4">
+      <div>
+        <span class="font-medium block text-gray-900">Credit or debit card</span>
+        <span class="text-sm text-gray-500">Pay securely using your card</span>
+      </div>
+    </div>
+    <div class="flex gap-1 text-xs font-bold text-gray-400">
+      <span class="border px-1.5 py-0.5 rounded bg-white">VISA</span>
+      <span class="border px-1.5 py-0.5 rounded bg-white">MC</span>
+    </div>
+  </label>
+
+  <div id="card-fields" class="bg-gray-50 border border-gray-200 rounded-xl p-4 mt-2 space-y-3 transition-all duration-200">
+    <div>
+      <label class="text-xs font-semibold uppercase text-gray-500 block mb-1">Card Number</label>
+      <input type="text" placeholder="0000 0000 0000 0000" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-black transition">
+    </div>
+    <div class="grid grid-cols-2 gap-3">
+      <div>
+        <label class="text-xs font-semibold uppercase text-gray-500 block mb-1">Expiration</label>
+        <input type="text" placeholder="MM / YY" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-black transition">
+      </div>
+      <div>
+        <label class="text-xs font-semibold uppercase text-gray-500 block mb-1">CVV</label>
+        <input type="password" placeholder="123" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-black transition">
+      </div>
+    </div>
+  </div>
+
+  <label class="payment-option border border-gray-200 rounded-xl p-4 flex items-start justify-between cursor-pointer bg-white transition-all duration-200 transform hover:-translate-y-1 hover:shadow-md block">
+    <div class="flex gap-3">
+      <input type="radio" name="payment_method" value="upi" class="mt-1 accent-black h-4 w-4">
+      <div>
+        <span class="font-medium block text-gray-900">UPI (GPay / PhonePe / Paytm)</span>
+        <span class="text-sm text-gray-500">Instant transfer using your UPI ID</span>
+      </div>
+    </div>
+    <span class="text-xs font-bold text-gray-400 border px-1.5 py-0.5 rounded bg-white">UPI</span>
+  </label>
+
+  <div id="upi-fields" class="hidden bg-gray-50 border border-gray-200 rounded-xl p-4 mt-2 transition-all duration-200">
+    <label class="text-xs font-semibold uppercase text-gray-500 block mb-1">Enter UPI ID</label>
+    <div class="flex gap-2">
+      <input type="text" placeholder="username@bank" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-black transition">
+      <button type="button" class="bg-black text-white px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-800 transition">Verify</button>
+    </div>
+  </div>
+
+  <label class="payment-option border border-gray-200 rounded-xl p-4 flex items-start justify-between cursor-pointer bg-white transition-all duration-200 transform hover:-translate-y-1 hover:shadow-md block">
+    <div class="flex gap-3">
+      <input type="radio" name="payment_method" value="netbanking" class="mt-1 accent-black h-4 w-4">
+      <div>
+        <span class="font-medium block text-gray-900">Net Banking</span>
+        <span class="text-sm text-gray-500">All major Indian banks supported</span>
+      </div>
+    </div>
+  </label>
+
+  <div id="netbanking-fields" class="hidden bg-gray-50 border border-gray-200 rounded-xl p-4 mt-2 transition-all duration-200">
+    <label class="text-xs font-semibold uppercase text-gray-500 block mb-1">Select Your Bank</label>
+    <select class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-black transition bg-white">
+      <option value="">-- Choose a Bank --</option>
+      <option value="sbi">State Bank of India (SBI)</option>
+      <option value="hdfc">HDFC Bank</option>
+      <option value="icici">ICICI Bank</option>
+      <option value="axis">Axis Bank</option>
+      <option value="kotak">Kotak Mahindra Bank</option>
+    </select>
+  </div>
+
+  <p class="text-xs text-gray-500 leading-relaxed mt-4">
+    By selecting the button below, I agree to the House Rules, Ground rules for guests, and that Airbnb can charge my payment method if I’m responsible for damage.
+  </p>
+
+  <button type="submit" class="w-full md:w-auto bg-gradient-to-r from-pink-600 to-red-500 hover:from-pink-500 hover:to-red-400 text-white font-semibold px-8 py-3.5 rounded-xl shadow-md transform hover:-translate-y-1 hover:shadow-lg active:translate-y-0 active:shadow-md transition-all duration-200 ease-out mt-4 block text-center">
+    Confirm and Pay
+  </button>
+</form>
+
+<script>
+  document.querySelectorAll('input[name="payment_method"]').forEach((radio) => {
+    radio.addEventListener('change', (e) => {
+      const selectedMethod = e.target.value;
+
+      // Hide all dynamic detail containers
+      document.getElementById('card-fields').classList.add('hidden');
+      document.getElementById('upi-fields').classList.add('hidden');
+      document.getElementById('netbanking-fields').classList.add('hidden');
+
+      // Unhide the specific container tied to the selected radio button
+      if (selectedMethod === 'card') {
+        document.getElementById('card-fields').classList.remove('hidden');
+      } else if (selectedMethod === 'upi') {
+        document.getElementById('upi-fields').classList.remove('hidden');
+      } else if (selectedMethod === 'netbanking') {
+        document.getElementById('netbanking-fields').classList.remove('hidden');
+      }
+    });
+  });
+</script>
+        </section>
+
+      </div>
+
+      <div class="lg:col-span-5">
+        <div class="border border-gray-200 rounded-2xl p-6 shadow-sm sticky top-6 bg-white space-y-6">
+          
+          <div class="flex gap-4 border-b border-gray-100 pb-4">
+            <div class="w-24 h-24 bg-gray-200 rounded-xl overflow-hidden flex-shrink-0">
+              <div class="w-full h-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=300&q=80')"></div>
+            </div>
+            <div class="flex flex-col justify-between">
+              <div>
+                <span class="text-xs text-gray-500 font-medium tracking-wide uppercase">Entire Home</span>
+                <h3 class="font-semibold text-gray-900 leading-tight">Radhey House</h3>
+              </div>
+              <div class="flex items-center gap-1 text-sm text-gray-900 font-medium">
+                <span>⭐ 5.0</span>
+                <span class="text-gray-400 font-normal">• Bhilwara</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h4 class="text-lg font-semibold mb-3">Price details</h4>
+            <div class="space-y-2.5 text-gray-600">
+              <div class="flex justify-between">
+                <span>$5,000 x 5 nights</span>
+                <span>$25,000</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Cleaning fee</span>
+                <span>$500</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Airbnb service fee</span>
+                <span>$1,200</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="border-t border-gray-100 pt-4 flex justify-between font-bold text-gray-900 text-lg">
+            <span>Total (USD)</span>
+            <span>$26,700</span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+</body>

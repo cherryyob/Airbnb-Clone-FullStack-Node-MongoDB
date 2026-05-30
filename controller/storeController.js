@@ -27,6 +27,14 @@ exports.home = (req, res, next) => {
       console.log(err);
     });
 };
+exports.checkout = (req, res, next) => {
+  res.render("./store/checkout", {
+    pageTitle: "Bookings",
+    isLoggedIn: req.session.isLoggedIn,
+    activePage: "bookings",
+    user: req.session.user,
+  });
+};
 exports.bookings = (req, res, next) => {
   console.log("session", req.session);
   res.render("./store/bookings", {

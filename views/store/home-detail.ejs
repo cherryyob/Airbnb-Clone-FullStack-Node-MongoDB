@@ -41,36 +41,57 @@
         <div class="bg-white p-8 md:p-10 rounded-[2.5rem] shadow-xl border border-gray-100">
           <h2 class="text-3xl font-black text-gray-900 mb-6">About this place</h2>
           <p class="text-gray-600 text-xl leading-relaxed">
-            <%= home.description || 'This beautiful home is perfectly situated to offer you the best experience. Every corner is designed for comfort and style.' %>
+            <%= home.description || 'This beautiful home is perfectly situated to offer you the best experience.' %>
           </p>
           
-          <div class="mt-10 pt-10 border-t border-gray-100 grid grid-cols-2 md:grid-cols-3 gap-6">
-            <div class="flex items-center gap-3 text-gray-700 font-bold">
-              <span class="bg-red-50 p-3 rounded-xl text-red-500 text-2xl">🏠</span> Entire Home
+          <div class="mt-10 pt-10 border-t border-gray-100 grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div class="group flex items-center gap-4 text-gray-700 font-bold cursor-default">
+              <span class="bg-red-50 p-4 rounded-2xl text-red-500 text-2xl group-hover:bg-red-500 group-hover:text-white group-hover:rotate-6 transition-all duration-300 shadow-sm group-hover:shadow-red-200">🏠</span> 
+              <div class="flex flex-col">
+                <span>Entire Home</span>
+                <span class="text-xs font-medium text-gray-400">Private space</span>
+              </div>
             </div>
-            <div class="flex items-center gap-3 text-gray-700 font-bold">
-              <span class="bg-red-50 p-3 rounded-xl text-red-500 text-2xl">✨</span> Clean Stay
+            
+            <div class="group flex items-center gap-4 text-gray-700 font-bold cursor-default">
+              <span class="bg-red-50 p-4 rounded-2xl text-red-500 text-2xl group-hover:bg-red-500 group-hover:text-white group-hover:rotate-6 transition-all duration-300 shadow-sm group-hover:shadow-red-200">✨</span> 
+              <div class="flex flex-col">
+                <span>Clean Stay</span>
+                <span class="text-xs font-medium text-gray-400">Sanitized daily</span>
+              </div>
             </div>
-            <div class="flex items-center gap-3 text-gray-700 font-bold">
-              <span class="bg-red-50 p-3 rounded-xl text-red-500 text-2xl">📍</span> Great Location
+            
+            <div class="group flex items-center gap-4 text-gray-700 font-bold cursor-default">
+              <span class="bg-red-50 p-4 rounded-2xl text-red-500 text-2xl group-hover:bg-red-500 group-hover:text-white group-hover:rotate-6 transition-all duration-300 shadow-sm group-hover:shadow-red-200">📍</span> 
+              <div class="flex flex-col">
+                <span>Great Location</span>
+                <span class="text-xs font-medium text-gray-400">Near city center</span>
+              </div>
             </div>
+
+            <a href="<%= isLoggedIn ? home.homeRuls : '/login' %>" <%= isLoggedIn ? 'download' : '' %> class="group flex items-center gap-4 text-gray-700 font-bold hover:text-red-500 transition-all duration-300">
+              <span class="bg-red-50 p-4 rounded-2xl text-red-500 text-2xl group-hover:bg-red-500 group-hover:text-white group-hover:rotate-6 transition-all duration-300 shadow-sm group-hover:shadow-red-200">📜</span> 
+              <div class="flex flex-col">
+                <span>House Rules</span>
+                <span class="text-xs font-medium text-gray-400 group-hover:text-red-300">Download PDF</span>
+              </div>
+            </a>
           </div>
         </div>
       </div>
 
       <div class="lg:col-span-1">
-        <div class="sticky top-28 space-y-4 animate-reveal-up" style="animation-delay: 0.2s">
+        <div class="sticky top-28 space-y-6 animate-reveal-up" style="animation-delay: 0.2s">
+          
           <div class="bg-white p-8 rounded-[2.5rem] shadow-2xl border border-gray-100">
             <div class="flex justify-between items-center mb-6">
               <div>
                 <span class="text-4xl font-black text-red-500">$<%= home.price %></span>
                 <span class="text-gray-400 font-bold uppercase text-sm">/ night</span>
               </div>
-              <div class="text-sm font-bold text-gray-800 bg-gray-50 px-3 py-1 rounded-full">
-                ⭐ <%= home.rating %>
-              </div>
+              <div class="text-sm font-bold text-gray-800 bg-gray-50 px-3 py-1 rounded-full">⭐ <%= home.rating %></div>
             </div>
-
+            <a href="<%= isLoggedIn ? '/checkout' : '/login' %>" >
             <button class="w-full bg-red-500 text-white py-5 rounded-2xl font-black text-xl shadow-xl shadow-red-200 hover:bg-red-700 hover:-translate-y-1 active:scale-95 transition-all duration-300">
               Book Now
             </button>
@@ -78,9 +99,15 @@
             <p class="text-center text-gray-400 text-sm mt-4 font-medium">You won't be charged yet</p>
           </div>
 
-          <div class="rounded-[2.5rem] overflow-hidden shadow-lg">
-            <%- include('../partial/favourate.ejs') %>
-          </div>
+          <button class="group w-full bg-red-50 border-2 border-red-100 p-6 rounded-[2.5rem] flex items-center justify-center gap-4 transition-all duration-500 hover:bg-red-500 hover:border-red-500 shadow-sm hover:shadow-xl hover:shadow-red-200">
+             <div class="bg-white p-3 rounded-xl text-red-500 text-2xl group-hover:rotate-12 transition-transform duration-300 shadow-sm">
+                ❤️
+             </div>
+             <span class="text-xl font-black text-gray-800 group-hover:text-white transition-colors duration-300">
+                Add To Favorites
+             </span>
+          </button>
+
         </div>
       </div>
 

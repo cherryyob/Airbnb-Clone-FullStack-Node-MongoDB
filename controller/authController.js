@@ -40,7 +40,7 @@ exports.postLogin = async (req, res, next) => {
         user: req.session.user,
       });
     }
-    console.log(req.body);
+
     req.session.isLoggedIn = true;
     const { _id, firstName, lastName, email, userType } = findedUser;
     req.session.user = {

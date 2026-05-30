@@ -8,11 +8,69 @@ const rootDir = require("./utils/pathUtil");
 const session = require("express-session");
 
 const { default: mongoose } = require("mongoose");
+const multer = require("multer");
+
+// random function for file name
+
+const randomString = (length) => {
+  const characters = "qwertyuioplkjhgfdsazxcvbnm";
+  let result = "";
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return result;
+};
+
+//Storage for multer
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const folder =
+      file.fieldname === "photo" ? "uploads/homeImage" : "uploads/homeRuls";
+    cb(null, folder);
+  },
+  filename: (req, file, cb) => {
+    cb(null, randomString(10) + "-" + file.originalname);
+  },
+});
+const fileFilter = (req, file, cb) => {
+  if (file.fieldname === "photo") {
+    if (["image/jpg", "image/jpeg", "image/png"].includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb("only jpeg,jpg,pnng accepted in image ", false);
+    }
+  } else if (file.fieldname === "homeRuls") {
+    if (file.mimetype === "application/pdf") {
+      cb(null, true);
+    } else {
+      cb("only pdf accepted in home ruls ", false);
+    }
+  } else {
+    console.log("handel hand");
+    cb("problem handling in docment", false);
+  }
+};
+
+// multer
+const multerOption = {
+  storage,
+  fileFilter,
+  limits: { fileSize: 5 * 1024 * 1024 },
+};
 
 const app = express();
 app.set("view engine", "ejs");
 app.set("views", "views");
 app.use(express.static(path.join(rootDir, "public")));
+app.use("/uploads", express.static(path.join(rootDir, "uploads")));
+app.use("/host/uploads", express.static(path.join(rootDir, "uploads")));
+app.use("/home-details/uploads", express.static(path.join(rootDir, "uploads")));
+app.use(
+  multer(multerOption).fields([
+    { name: "photo", maxCount: 1 },
+    { name: "homeRuls", maxCount: 1 },
+  ]),
+);
 
 const MongoDbStore = require("connect-mongodb-session")(session);
 const pass = "cherRy78";
@@ -46,7 +104,7 @@ app.use((error, req, res, next) => {
   res.status(status).render("500", {
     pageTitle: "Error",
     path: "/500",
-    isloggedIn: req.session.isloggedIn,
+    isLoggedIn: req.session?.isLoggedIn || false,
   });
 });
 mongoose
