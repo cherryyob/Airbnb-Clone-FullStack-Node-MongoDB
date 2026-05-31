@@ -27,13 +27,23 @@ exports.home = (req, res, next) => {
       console.log(err);
     });
 };
-exports.checkout = (req, res, next) => {
-  res.render("./store/checkout", {
-    pageTitle: "Bookings",
-    isLoggedIn: req.session.isLoggedIn,
-    activePage: "bookings",
-    user: req.session.user,
-  });
+exports.checkout = async (req, res, next) => {
+  const id = req.params.homeId;
+  const selectedHome = await homeModel.findById(id);
+  console.log(selectedHome, "hohodfo");
+  if (selectedHome) {
+    res.render("./store/checkout", {
+      home: selectedHome,
+      pageTitle: "Bookings",
+      isLoggedIn: req.session.isLoggedIn,
+      activePage: "bookings",
+      user: req.session.user,
+    });
+  } else {
+    const error = new Error("Selected home can't findeble");
+    error.status = 404;
+    return next(error);
+  }
 };
 exports.bookings = (req, res, next) => {
   console.log("session", req.session);

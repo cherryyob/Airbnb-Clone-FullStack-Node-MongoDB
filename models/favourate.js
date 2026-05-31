@@ -1,1 +1,1 @@
-move to user spesific view
+//move to user spesific view

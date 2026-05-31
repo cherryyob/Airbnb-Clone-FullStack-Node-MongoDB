@@ -10,7 +10,7 @@ userRauter.get("/booking", storeController.bookings);
 userRauter.get("/favourate", storeController.favourate);
 userRauter.get("/home-list", storeController.homeList);
 userRauter.post("/favouraties", storeController.addToFavourate);
-userRauter.get("/checkout", storeController.checkout);
+userRauter.get("/checkout/:homeId", storeController.checkout);
 userRauter.post(
   "/remove-favourate/:homeId",
   storeController.postRemoveFavourate,
