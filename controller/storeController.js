@@ -33,6 +33,7 @@ exports.checkout = async (req, res, next) => {
   console.log(selectedHome, "hohodfo");
   if (selectedHome) {
     res.render("./store/checkout", {
+      razorpayKeyId: process.env.RAZORPAY_KEY_ID,
       home: selectedHome,
       pageTitle: "Bookings",
       isLoggedIn: req.session.isLoggedIn,

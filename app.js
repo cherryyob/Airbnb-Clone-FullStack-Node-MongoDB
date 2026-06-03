@@ -1,4 +1,5 @@
 const express = require("express");
+require("dotenv").config();
 const path = require("path");
 const userRauter = require("./routes/userRauter");
 const hostRouter = require("./routes/hostRouter");
@@ -6,6 +7,7 @@ const errorRouter = require("./routes/errorRauter");
 const authRouter = require("./routes/authRouter");
 const rootDir = require("./utils/pathUtil");
 const session = require("express-session");
+const paymentRouter = require("./routes/paymentRoutes");
 
 const { default: mongoose } = require("mongoose");
 const multer = require("multer");
@@ -79,7 +81,7 @@ const store = new MongoDbStore({
   uri: URL,
   collection: "sessions",
 });
-
+app.use(express.json());
 app.use(express.urlencoded());
 app.use(
   session({
@@ -93,6 +95,7 @@ app.use(
 
 app.use(userRauter);
 app.use(authRouter);
+app.use("/payment", paymentRouter);
 
 app.use("/host", hostRouter);
 
