@@ -1,4 +1,5 @@
 <%- include('../partial/head') %>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 <body class="bg-gray-50 text-gray-800 antialiased">
   <%- include('../partial/nav') %>
@@ -10,99 +11,80 @@
       <div class="lg:col-span-7 space-y-8">
         
         <section class="border-b border-gray-200 pb-6">
-          <h2 class="text-2xl font-semibold mb-4">Your trip</h2>
-          <div class="flex justify-between items-start py-3">
-            <div>
-              <p class="font-medium text-gray-900">Dates</p>
-              <p class="text-gray-600 text-sm">May 31 – Jun 05, 2026</p>
+          <h2 class="text-2xl font-semibold mb-6">Your trip</h2>
+          
+          <div class="space-y-4">
+            <div type="button" id="editDatesBtn" class="w-full flex justify-between items-center p-4 bg-white border border-gray-200 rounded-xl hover:border-gray-400 hover:shadow-sm transition cursor-pointer text-left">
+              <div>
+                <p class="font-semibold text-xs uppercase tracking-wider text-gray-400 mb-0.5">Dates</p>
+                <p id="dateDisplay" class="text-gray-800 font-medium text-base">2026-05-31 to 2026-06-05</p>
+                <input type="text" id="datePickerInput" class="hidden">
+              </div>
+              <span class="text-sm font-semibold underline text-rose-600 hover:text-rose-700">Edit</span>
             </div>
-            <button class="text-sm font-semibold underline text-black hover:text-gray-600 transition">Edit</button>
-          </div>
-          <div class="flex justify-between items-start py-3">
-            <div>
-              <p class="font-medium text-gray-900">Guests</p>
-              <p class="text-gray-600 text-sm">1 guest</p>
+
+            <div class="w-full flex justify-between items-center p-4 bg-white border border-gray-200 rounded-xl hover:border-gray-400 hover:shadow-sm transition text-left">
+              <div class="w-full flex items-center justify-between">
+                <div>
+                  <label for="directNightsBox" class="font-semibold text-xs uppercase tracking-wider text-gray-400 mb-0.5 block">Duration</label>
+                  <span class="text-gray-800 font-medium text-base">Total Length of Stay</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <input 
+                    type="number" 
+                    id="directNightsBox" 
+                    value="5" 
+                    min="1" 
+                    max="30" 
+                    class="w-16 text-center font-semibold text-base py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500 text-gray-900"
+                  />
+                  <span class="text-sm font-medium text-gray-600">nights</span>
+                </div>
+              </div>
             </div>
-            <button class="text-sm font-semibold underline text-black hover:text-gray-600 transition">Edit</button>
+
+            <div class="relative">
+              <div id="editGuestsBtn" class="w-full flex justify-between items-center p-4 bg-white border border-gray-200 rounded-xl hover:border-gray-400 hover:shadow-sm transition cursor-pointer text-left">
+                <div>
+                  <p class="font-semibold text-xs uppercase tracking-wider text-gray-400 mb-0.5">Guests</p>
+                  <p id="guestDisplay" class="text-gray-800 font-medium text-base">1 adult</p>
+                </div>
+                <span class="text-sm font-semibold underline text-rose-600 hover:text-rose-700">Edit</span>
+              </div>
+              
+              <div id="guestDropdown" class="hidden absolute left-0 right-0 lg:right-auto mt-2 w-full lg:w-80 bg-white border border-gray-200 rounded-2xl shadow-xl p-5 z-50 space-y-5">
+                <div class="flex justify-between items-center">
+                  <div>
+                    <p class="font-semibold text-sm text-gray-900">Adults</p>
+                    <p class="text-xs text-gray-500">Age 18 or above</p>
+                  </div>
+                  <div class="flex items-center gap-4">
+                    <button type="button" id="decAdults" class="w-9 h-9 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 font-bold hover:border-black active:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed transition">-</button>
+                    <span id="adultCount" class="text-base font-semibold w-5 text-center text-gray-900">1</span>
+                    <button type="button" id="incAdults" class="w-9 h-9 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 font-bold hover:border-black active:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed transition">+</button>
+                  </div>
+                </div>
+                <div class="flex justify-between items-center">
+                  <div>
+                    <p class="font-semibold text-sm text-gray-900">Children</p>
+                    <p class="text-xs text-gray-500">Under 18 years</p>
+                  </div>
+                  <div class="flex items-center gap-4">
+                    <button type="button" id="decKids" class="w-9 h-9 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 font-bold hover:border-black active:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed transition">-</button>
+                    <span id="kidCount" class="text-base font-semibold w-5 text-center text-gray-900">0</span>
+                    <button type="button" id="incKids" class="w-9 h-9 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 font-bold hover:border-black active:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed transition">+</button>
+                  </div>
+                </div>
+                <div class="pt-3 border-t border-gray-100 flex justify-end">
+                  <button type="button" id="closeGuestsBtn" class="text-xs font-bold bg-gray-950 text-white px-4 py-2 rounded-xl hover:bg-gray-800 active:scale-95 transition">Save & Close</button>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
-        <section>
-          <h2 class="text-2xl font-semibold mb-4">Choose how to pay</h2>
-          
+        <section>         
           <form class="space-y-4" id="paymentForm">
-            <label class="payment-option border border-gray-200 rounded-xl p-4 flex items-start justify-between cursor-pointer bg-white transition-all duration-200 transform hover:-translate-y-1 hover:shadow-md block">
-              <div class="flex gap-3">
-                <input type="radio" name="payment_method" value="card" checked class="mt-1 accent-black h-4 w-4">
-                <div>
-                  <span class="font-medium block text-gray-900">Credit or debit card</span>
-                  <span class="text-sm text-gray-500">Pay securely using your card</span>
-                </div>
-              </div>
-              <div class="flex gap-1 text-xs font-bold text-gray-400">
-                <span class="border px-1.5 py-0.5 rounded bg-white">VISA</span>
-                <span class="border px-1.5 py-0.5 rounded bg-white">MC</span>
-              </div>
-            </label>
-
-            <div id="card-fields" class="bg-gray-50 border border-gray-200 rounded-xl p-4 mt-2 space-y-3 transition-all duration-200">
-              <div>
-                <label class="text-xs font-semibold uppercase text-gray-500 block mb-1">Card Number</label>
-                <input type="text" placeholder="0000 0000 0000 0000" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-black transition">
-              </div>
-              <div class="grid grid-cols-2 gap-3">
-                <div>
-                  <label class="text-xs font-semibold uppercase text-gray-500 block mb-1">Expiration</label>
-                  <input type="text" placeholder="MM / YY" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-black transition">
-                </div>
-                <div>
-                  <label class="text-xs font-semibold uppercase text-gray-500 block mb-1">CVV</label>
-                  <input type="password" placeholder="123" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-black transition">
-                </div>
-              </div>
-            </div>
-
-            <label class="payment-option border border-gray-200 rounded-xl p-4 flex items-start justify-between cursor-pointer bg-white transition-all duration-200 transform hover:-translate-y-1 hover:shadow-md block">
-              <div class="flex gap-3">
-                <input type="radio" name="payment_method" value="upi" class="mt-1 accent-black h-4 w-4">
-                <div>
-                  <span class="font-medium block text-gray-900">UPI (GPay / PhonePe / Paytm)</span>
-                  <span class="text-sm text-gray-500">Instant transfer using your UPI ID</span>
-                </div>
-              </div>
-              <span class="text-xs font-bold text-gray-400 border px-1.5 py-0.5 rounded bg-white">UPI</span>
-            </label>
-
-            <div id="upi-fields" class="hidden bg-gray-50 border border-gray-200 rounded-xl p-4 mt-2 transition-all duration-200">
-              <label class="text-xs font-semibold uppercase text-gray-500 block mb-1">Enter UPI ID</label>
-              <div class="flex gap-2">
-                <input type="text" placeholder="username@bank" class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-black transition">
-                <button type="button" class="bg-black text-white px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-800 transition">Verify</button>
-              </div>
-            </div>
-
-            <label class="payment-option border border-gray-200 rounded-xl p-4 flex items-start justify-between cursor-pointer bg-white transition-all duration-200 transform hover:-translate-y-1 hover:shadow-md block">
-              <div class="flex gap-3">
-                <input type="radio" name="payment_method" value="netbanking" class="mt-1 accent-black h-4 w-4">
-                <div>
-                  <span class="font-medium block text-gray-900">Net Banking</span>
-                  <span class="text-sm text-gray-500">All major Indian banks supported</span>
-                </div>
-              </div>
-            </label>
-
-            <div id="netbanking-fields" class="hidden bg-gray-50 border border-gray-200 rounded-xl p-4 mt-2 transition-all duration-200">
-              <label class="text-xs font-semibold uppercase text-gray-500 block mb-1">Select Your Bank</label>
-              <select class="w-full border border-gray-300 rounded-lg p-2.5 text-sm focus:outline-none focus:border-black transition bg-white">
-                <option value="">-- Choose a Bank --</option>
-                <option value="sbi">State Bank of India (SBI)</option>
-                <option value="hdfc">HDFC Bank</option>
-                <option value="icici">ICICI Bank</option>
-                <option value="axis">Axis Bank</option>
-                <option value="kotak">Kotak Mahindra Bank</option>
-              </select>
-            </div>
-
             <p class="text-xs text-gray-500 leading-relaxed mt-4">
               By selecting the button below, I agree to the House Rules, Ground rules for guests, and that Airbnb can charge my payment method if I’m responsible for damage.
             </p>
@@ -114,8 +96,7 @@
         </section>
 
       </div>
-
-      <div class="lg:col-span-5">
+        <div class="lg:col-span-5">
         <div class="border border-gray-200 rounded-2xl p-6 shadow-sm sticky top-6 bg-white space-y-6">
           
           <div class="flex gap-4 border-b border-gray-100 pb-4">
@@ -144,7 +125,7 @@
                     <input 
                       type="number" 
                       id="nightsInput" 
-                      value="2" 
+                      value="5" 
                       min="1" 
                       max="30" 
                       class="w-12 border rounded px-1 py-0.5 text-center focus:outline-none focus:ring-1 focus:ring-rose-500"
@@ -176,36 +157,19 @@
     </div>
   </main>
 
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      // 1. Payment Methods Toggle Logic
-      document.querySelectorAll('input[name="payment_method"]').forEach((radio) => {
-        radio.addEventListener('change', (e) => {
-          const selectedMethod = e.target.value;
-
-          document.getElementById('card-fields').classList.add('hidden');
-          document.getElementById('upi-fields').classList.add('hidden');
-          document.getElementById('netbanking-fields').classList.add('hidden');
-
-          if (selectedMethod === 'card') {
-            document.getElementById('card-fields').classList.remove('hidden');
-          } else if (selectedMethod === 'upi') {
-            document.getElementById('upi-fields').classList.remove('hidden');
-          } else if (selectedMethod === 'netbanking') {
-            document.getElementById('netbanking-fields').classList.remove('hidden');
-          }
-        });
-      });
-
       // 2. Pricing Auto-Calculator Logic
       const rawPrice = "<%= home.price %>";
-    const pricePerNight = parseInt(rawPrice.replace(/[^0-9]/g, '')) || 0;
+      const pricePerNight = parseInt(rawPrice.replace(/[^0-9]/g, '')) || 0;
       const cleaningFee = 500;
       const serviceFee = 1200;
 
       const nightsInput = document.getElementById("nightsInput");
       const nightsSubtotal = document.getElementById("nightsSubtotal");
       const totalPrice = document.getElementById("totalPrice");
+      const directNightsBox = document.getElementById("directNightsBox");
 
       function calculateTotals() {
         let nights = parseInt(nightsInput.value);
@@ -224,12 +188,140 @@
       }
 
       // Event Listener handles typing and arrow clicks smoothly
-      nightsInput.addEventListener("input", calculateTotals);
+      nightsInput.addEventListener("input", () => {
+        directNightsBox.value = nightsInput.value;
+        calculateTotals();
+      });
 
-      // Initialize instantly on load (renders the default 2 nights dynamically)
+
+      // --- NEW LOGIC: Dynamic Date Range Picker Calendar Configuration ---
+      const dateDisplay = document.getElementById("dateDisplay");
+      const editDatesBtn = document.getElementById("editDatesBtn");
+      
+      const fp = flatpickr("#datePickerInput", {
+        mode: "range",
+        dateFormat: "Y-m-d",
+        defaultDate: ["2026-05-31", "2026-06-05"],
+        onChange: function(selectedDates, dateStr) {
+          if (selectedDates.length === 2) {
+            const checkIn = selectedDates[0];
+            const checkOut = selectedDates[1];
+            
+            // Clean custom text string calculation replacement mapping
+            const parts = dateStr.split(" to ");
+            const formatIn = parts[0];
+            const formatOut = parts[1] || "";
+            
+            // Calculate exactly how many nights have been chosen
+            const timeDiff = Math.abs(checkOut.getTime() - checkIn.getTime());
+            const diffNights = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+            
+            // Update display fields with calculation values text
+            dateDisplay.textContent = `${formatIn} to ${formatOut}`;
+            directNightsBox.value = diffNights;
+            
+            // Keep side breakdown input synchronized
+            nightsInput.value = diffNights;
+            calculateTotals();
+          }
+        }
+      });
+
+      // Directly adjust checkout dates dynamically if the night entry changes directly
+      directNightsBox.addEventListener("input", () => {
+        let inputNights = parseInt(directNightsBox.value);
+        if (isNaN(inputNights) || inputNights < 1) return;
+
+        const currentSelected = fp.selectedDates;
+        if (currentSelected.length > 0) {
+          const checkIn = new Date(currentSelected[0].getTime());
+          const newCheckOut = new Date(checkIn.getTime());
+          
+          // Add nights directly to compute the future checkout date target
+          newCheckOut.setDate(checkIn.getDate() + inputNights);
+          
+          // Re-inject calculations back into flatpickr instance configuration
+          fp.setDate([checkIn, newCheckOut], true);
+          
+          // Keep side element fields matching active changes
+          nightsInput.value = inputNights;
+          calculateTotals();
+        }
+      });
+
+      editDatesBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        fp.open();
+      });
+
+
+      // --- NEW LOGIC: Advanced Guest Segmentation Breakdown ---
+      const guestDisplay = document.getElementById("guestDisplay");
+      const guestDropdown = document.getElementById("guestDropdown");
+      const editGuestsBtn = document.getElementById("editGuestsBtn");
+      const closeGuestsBtn = document.getElementById("closeGuestsBtn");
+
+      let adults = 1;
+      let kids = 0;
+
+      const adultCountLabel = document.getElementById("adultCount");
+      const kidCountLabel = document.getElementById("kidCount");
+      const decAdults = document.getElementById("decAdults");
+      const incAdults = document.getElementById("incAdults");
+      const decKids = document.getElementById("decKids");
+      const incKids = document.getElementById("incKids");
+
+      function updateGuestInterface() {
+        adultCountLabel.textContent = adults;
+        kidCountLabel.textContent = kids;
+
+        // Total caps checking (Total Adults must not exceed 5, minimum 1)
+        decAdults.disabled = (adults <= 1);
+        incAdults.disabled = (adults >= 5);
+
+        // Kids configuration matching
+        decKids.disabled = (kids <= 0);
+        incKids.disabled = (kids >= 5); // Assuming individual metric boundaries
+
+        // Dynamic rendering layout logic
+        let guestString = `${adults} ${adults === 1 ? 'adult' : 'adults'}`;
+        if (kids > 0) {
+          guestString += `, ${kids} ${kids === 1 ? 'child' : 'children'}`;
+        }
+        guestDisplay.textContent = guestString;
+      }
+
+      editGuestsBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        guestDropdown.classList.toggle("hidden");
+      });
+
+      closeGuestsBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        guestDropdown.classList.add("hidden");
+      });
+
+      // Stop panel closure upon clicking interior option zones
+      guestDropdown.addEventListener("click", (e) => e.stopPropagation());
+
+      // Global window binding listener to catch click out actions outside the target selector frame
+      document.addEventListener("click", () => {
+        guestDropdown.classList.add("hidden");
+      });
+
+      incAdults.addEventListener("click", () => { if (adults < 5) { adults++; updateGuestInterface(); } });
+      decAdults.addEventListener("click", () => { if (adults > 1) { adults--; updateGuestInterface(); } });
+      incKids.addEventListener("click", () => { if (kids < 5) { kids++; updateGuestInterface(); } });
+      decKids.addEventListener("click", () => { if (kids > 0) { kids--; updateGuestInterface(); } });
+
+      // Initialize counter status states on document setup stage initialization loop
+      updateGuestInterface();
+
+
+      // Initialize instantly on load (renders the default nights dynamically)
       calculateTotals();
 
-     const paymentForm = document.getElementById('paymentForm');
+      const paymentForm = document.getElementById('paymentForm');
       if (paymentForm) {
         
         paymentForm.addEventListener('submit', async(event) => {
@@ -308,39 +400,6 @@
         });
       }
     });
-  
-
   </script>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </body>
-<!-- /* 
-              // 💡 THIS HANDLER SENDS DATA BACK TO MONGODB FOR SAFE KEEPING:
-              "handler": async function (authResponse) {
-                try {
-                  alert("Payment Authorized! Saving transactions to database...");
-                  
-                  // Send checkout details to your new backend verification route
-                  const verifyResponse = await fetch("/checkout/verify-payment", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                      razorpay_order_id: authResponse.razorpay_order_id,
-                      razorpay_payment_id: authResponse.razorpay_payment_id,
-                      razorpay_signature: authResponse.razorpay_signature,
-                      homeId: "<%= home._id %>",
-                      amount: paid
-                    })
-                  });
-
-                  const verificationResult = await verifyResponse.json();
-                  
-                  if (verificationResult.success) {
-                    alert("Booking successfully verified and saved in your database!");
-                    window.location.replace("/");
-                  } else {
-                    alert("Local payment verification failed: " + verificationResult.message);
-                  }
-                } catch (verifyError) {
-                  console.error("Verification processing failed: ", verifyError);
-                  alert("Could not complete background transaction save.");
-                }*/ -->
