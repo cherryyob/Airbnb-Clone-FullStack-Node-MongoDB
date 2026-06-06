@@ -8,9 +8,8 @@ const razorpay = new Razorpay({
 });
 
 exports.createOrder = async (req, res, next) => {
-  console.log("yes");
   const { amount } = req.body;
-  console.log("yes", req.body);
+
   try {
     const options = {
       amount: Math.round(amount * 100),
@@ -28,7 +27,12 @@ exports.createOrder = async (req, res, next) => {
 };
 exports.verifyPayment = async (req, res) => {
   const {
+    checkIn,
+    checkOut,
+    nights,
     amount,
+    adults,
+    kids,
     razorpay_order_id,
     razorpay_payment_id,
     razorpay_signature,
@@ -51,6 +55,9 @@ exports.verifyPayment = async (req, res) => {
         razorpayOrderId: razorpay_order_id,
         razorpayPaymentId: razorpay_payment_id,
         paymentStatus: "Success",
+        bookingDate: { checkIn, checkOut },
+        nights,
+        member: { adults, kids },
       });
 
       await newBooking.save();

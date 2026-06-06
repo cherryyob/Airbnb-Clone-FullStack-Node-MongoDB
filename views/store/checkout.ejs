@@ -201,6 +201,7 @@
       const fp = flatpickr("#datePickerInput", {
         mode: "range",
         dateFormat: "Y-m-d",
+        minDate:"today",
         defaultDate: ["2026-05-31", "2026-06-05"],
         onChange: function(selectedDates, dateStr) {
           if (selectedDates.length === 2) {
@@ -340,15 +341,15 @@
              if(!orderData.id){
               alert("Something went wrong prepering the order try again")
               return;
-             }
-             console.log(orderData,"order data")
-             const options = {
+             }             
+             
+            const options = {
                 "key": "<%= razorpayKeyId %>", // EJS will inject the key here safely on load
                 "amount": orderData.amount, 
                 "currency": orderData.currency,
                 "name": "Radhey House Booking",
                 "description": "Confirm and pay checkout",
-                "order_id": orderData.id, 
+                "order_id": orderData.id,                
                 "handler": async function (authResponse) {
 
                   try {
@@ -359,6 +360,11 @@
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
+                      adults,
+                      kids,
+                      nights : parseInt(nightsInput.value),
+                      checkIn:fp.selectedDates[0],
+                      checkOut:fp.selectedDates[1],
                       razorpay_order_id: authResponse.razorpay_order_id,
                       razorpay_payment_id: authResponse.razorpay_payment_id,
                       razorpay_signature: authResponse.razorpay_signature,
