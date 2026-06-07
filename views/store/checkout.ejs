@@ -197,9 +197,12 @@
       // --- NEW LOGIC: Dynamic Date Range Picker Calendar Configuration ---
       const dateDisplay = document.getElementById("dateDisplay");
       const editDatesBtn = document.getElementById("editDatesBtn");
-      
+      const disableRange=<%- JSON.stringify(disableRange) %>
+     
+       console.log(disableRange);
       const fp = flatpickr("#datePickerInput", {
         mode: "range",
+        disable:disableRange,
         dateFormat: "Y-m-d",
         minDate:"today",
         defaultDate: ["2026-05-31", "2026-06-05"],

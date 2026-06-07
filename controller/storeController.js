@@ -1,6 +1,7 @@
 const homeModel = require("../models/home");
 const favourateModel = require("../models/favourate");
 const UserModel = require("../models/User");
+const Booking = require("../models/bookingModel");
 
 exports.getHome = (req, res, next) => {
   res.render("host/addHome", {
@@ -30,11 +31,21 @@ exports.home = (req, res, next) => {
 exports.checkout = async (req, res, next) => {
   const id = req.params.homeId;
   const selectedHome = await homeModel.findById(id);
-  console.log(selectedHome, "hohodfo");
+  const bookings = await Booking.find(
+    { homeId: id },
+    { bookingDate: 1, _id: 0 },
+  );
+  const disableRange = bookings.map((b) => ({
+    //booking is UTC time, and Flatpickr sometimes shifts dates depending on timezone so we have to split it "T".
+    from: new Date(b.bookingDate.checkIn).toISOString().split("T")[0],
+    to: new Date(b.bookingDate.checkOut).toISOString().split("T")[0],
+  }));
+
   if (selectedHome) {
     res.render("./store/checkout", {
       razorpayKeyId: process.env.RAZORPAY_KEY_ID,
       home: selectedHome,
+      disableRange,
       pageTitle: "Bookings",
       isLoggedIn: req.session.isLoggedIn,
       activePage: "bookings",
@@ -55,15 +66,13 @@ exports.bookings = (req, res, next) => {
     user: req.session.user,
   });
 };
-exports.homeDetails = (req, res, next) => {
+exports.homeDetails = async (req, res, next) => {
   const id = req.params.homeId;
 
   homeModel.findById(id).then((home) => {
     if (!home) {
-      console.log("home is not found");
       res.redirect("/home-list");
     } else {
-      console.log("home is found : ", home);
       res.render("./store/home-detail", {
         home: home,
         pageTitle: "Home Details",
