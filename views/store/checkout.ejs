@@ -197,9 +197,9 @@
       // --- NEW LOGIC: Dynamic Date Range Picker Calendar Configuration ---
       const dateDisplay = document.getElementById("dateDisplay");
       const editDatesBtn = document.getElementById("editDatesBtn");
-      const disableRange=<%- JSON.stringify(disableRange) %>
-     
-       console.log(disableRange);
+      const disableRange = <%- JSON.stringify(disableRange || []) %>;
+      console.log(disableRange,)
+      console.log(disableRange);
       const fp = flatpickr("#datePickerInput", {
         mode: "range",
         disable:disableRange,
@@ -337,12 +337,21 @@
             const response=await fetch("/payment/create-order",{
               method:"post",
               headers:{'Content-Type': 'application/json'},
-              body:JSON.stringify({amount:paid})
+              body:JSON.stringify({amount:paid,checkIn:fp.selectedDates[0],
+                      checkOut:fp.selectedDates[1],homeId: "<%= home._id %>",})
             });
              const orderData=await response.json();
-             console.log(orderData,"order data")
+             console.log(orderData,"orderData")
              if(!orderData.id){
+              
+              if(orderData.refreshPAage){
+               
+               alert("SomeOne Is Checkout Faster Then You Try Deffrent Date")
+                window.location.reload();
+              return;
+              }
               alert("Something went wrong prepering the order try again")
+              window.location.reload();
               return;
              }             
              
@@ -372,7 +381,8 @@
                       razorpay_payment_id: authResponse.razorpay_payment_id,
                       razorpay_signature: authResponse.razorpay_signature,
                       homeId: "<%= home._id %>",
-                      amount: paid
+                      amount: paid,
+                  
                     })
                   });
 
@@ -380,10 +390,10 @@
                   
                   if (verificationResult.success) {
                     
-                    alert("Booking successfully verified and saved in your database!");
+                    alert(verificationResult.message);
                     window.location.replace("/");
                   } else {
-                    alert("Local payment verification failed: " + verificationResult.message);
+                    alert(verificationResult.message);
                   }
                 } catch (verifyError) {
                   console.error("Verification processing failed: ", verifyError);
@@ -402,7 +412,9 @@
               alert("Payment failed: " + failResponse.error.description);
             });
 
-          }catch{}
+          }catch(err){
+            console.error("Order creation failed on frontend:", err);
+          }
 
 
           console.log(paid,"Form submission caught! No reload happening.");

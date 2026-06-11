@@ -1,7 +1,7 @@
 const homeModel = require("../models/home");
 const favourateModel = require("../models/favourate");
 const UserModel = require("../models/User");
-const Booking = require("../models/bookingModel");
+const { getHomeBookings } = require("../utils/getLatestBookingDataUsingHomeId");
 
 exports.getHome = (req, res, next) => {
   res.render("host/addHome", {
@@ -31,15 +31,8 @@ exports.home = (req, res, next) => {
 exports.checkout = async (req, res, next) => {
   const id = req.params.homeId;
   const selectedHome = await homeModel.findById(id);
-  const bookings = await Booking.find(
-    { homeId: id },
-    { bookingDate: 1, _id: 0 },
-  );
-  const disableRange = bookings.map((b) => ({
-    //booking is UTC time, and Flatpickr sometimes shifts dates depending on timezone so we have to split it "T".
-    from: new Date(b.bookingDate.checkIn).toISOString().split("T")[0],
-    to: new Date(b.bookingDate.checkOut).toISOString().split("T")[0],
-  }));
+  const disableRange = await getHomeBookings(id);
+  console.log(disableRange, "disable");
 
   if (selectedHome) {
     res.render("./store/checkout", {
