@@ -1,70 +1,106 @@
-<header class="fixed top-0 left-0 w-full z-[100] bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm animate-in slide-in-from-top duration-500">
-  <nav class="container mx-auto px-4 h-20 flex justify-between items-center">
+<header class="fixed top-0 left-0 w-full z-[100] bg-white/70 backdrop-blur-xl border-b border-gray-100/80 shadow-[0_2px_20px_-5px_rgba(0,0,0,0.03)] transition-all duration-300">
+  <nav class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
     
     <div class="flex items-center">
-      <a href="/" class="text-3xl font-extrabold text-red-500 hover:scale-110 transition-transform duration-300 ease-out italic">
-        airbnb
+      <a href="/" class="group relative flex items-center gap-2 text-3xl font-black tracking-tight text-slate-900 transition-all duration-300 select-none">
+        <span class="text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-2xl italic group-hover:bg-indigo-600 group-hover:text-white transition-all duration-500 ease-out shadow-sm group-hover:shadow-indigo-200 group-hover:shadow-lg">
+          Stay
+        </span>
+        <span class="italic text-slate-800 tracking-tighter group-hover:text-indigo-600 transition-colors duration-300">Yob</span>
+        <span class="absolute -right-3 bottom-2 w-1.5 h-1.5 bg-violet-500 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:animate-ping"></span>
       </a>
     </div>
 
-    <ul class="flex space-x-1 items-center">
+    <ul class="flex items-center bg-gray-50/80 border border-gray-100/50 p-1.5 rounded-full shadow-inner gap-1">
       <li>
-        <a href="/" class="py-2 px-4 rounded-full transition-all duration-300 block hover:-translate-y-1 <%=activePage==='home' ? 'bg-red-500 text-white shadow-md':'hover:bg-gray-100 text-gray-700'%>">
-          🏠 Home
+        <a href="/" class="flex items-center gap-2 py-2.5 px-4 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 <%= activePage === 'home' ? 'bg-slate-900 text-white shadow-md shadow-slate-900/20' : 'text-slate-600 hover:text-slate-900 hover:bg-white' %>">
+          <svg class="w-4 h-4 text-current" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" /></svg>
+          Home
         </a>
       </li>
 
-      <% if(isLoggedIn){%>
-        <%if(user.userType==='guest'){%>
+      <% if(isLoggedIn) { %>
+        <% if(user.userType === 'guest') { %>
+          <li>
+            <a href="/home-list" class="flex items-center gap-2 py-2.5 px-4 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 <%= activePage === 'homeList' ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20' : 'text-slate-600 hover:text-slate-900 hover:bg-white' %>">
+              <svg class="w-4 h-4 text-current" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205l3 1m1.5-1.5l-3-1m-5.01 4.792L10.75 15.75" /></svg>
+              Stays
+            </a>
+          </li>
+
+          <li>
+            <a href="/experiences" class="flex items-center gap-2 py-2.5 px-4 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 <%= activePage === 'experiences' ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20' : 'text-slate-600 hover:text-slate-900 hover:bg-white' %>">
+              <svg class="w-4 h-4 text-current" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 21l8.904-4.473L21 21l-1.187-5.096A9.75 9.75 0 109.813 15.904z" /></svg>
+              Experiences
+            </a>
+          </li>
+
+          <li>
+            <a href="/bookings" class="flex items-center gap-2 py-2.5 px-4 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 <%= activePage === 'bookings' ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20' : 'text-slate-600 hover:text-slate-900 hover:bg-white' %>">
+              <svg class="w-4 h-4 text-current" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" /></svg>
+              Bookings
+            </a>
+          </li>
+
+          <li>
+            <a href="/favourate" class="flex items-center gap-2 py-2.5 px-4 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 <%= activePage === 'favourate' ? 'bg-violet-600 text-white shadow-md shadow-violet-600/20' : 'text-slate-600 hover:text-violet-600 hover:bg-violet-50/50' %>">
+              <svg class="w-4 h-4 <%= activePage === 'favourate' ? 'fill-current' : 'text-current' %>" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" /></svg>
+              Saved
+            </a>
+          </li>
+        <% } %>
+
+        <% if(user.userType === 'host') { %>
+          <li>
+            <a href="/host/host-home-list" class="flex items-center gap-2 py-2.5 px-4 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 <%= activePage === 'homeHostList' ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20' : 'text-slate-600 hover:text-slate-900 hover:bg-white' %>">
+              <svg class="w-4 h-4 text-current" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+              Dashboard
+            </a>
+          </li>
+
+          <li>
+            <a href="/host/add-home" class="flex items-center gap-2 py-2.5 px-4 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 <%= activePage === 'add-Home' ? 'bg-cyan-600 text-white shadow-md shadow-cyan-600/20' : 'text-slate-600 hover:text-cyan-600 hover:bg-cyan-50/50' %>">
+              <svg class="w-4 h-4 text-current" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+              List Property
+            </a>
+          </li>
+        <% } %>
+
         <li>
-          <a href="/home-list" class="py-2 px-4 rounded-full transition-all duration-300 block hover:-translate-y-1 <%=activePage==='homeList' ? 'bg-red-500 text-white shadow-md':'hover:bg-gray-100 text-gray-700' %>">
-            🏡 Home-List
+          <a href="/support" class="flex items-center gap-2 py-2.5 px-4 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 <%= activePage === 'support' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-600 hover:text-slate-900 hover:bg-white' %>">
+            <svg class="w-4 h-4 text-current" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" /></svg>
+            Support
           </a>
         </li>
 
-        <li>
-          <a href="/bookings" class="py-2 px-4 rounded-full transition-all duration-300 block hover:-translate-y-1 <%=activePage==='bookings' ? 'bg-red-500 text-white shadow-md':'hover:bg-gray-100 text-gray-700' %>">
-            📅 Booking
+        <li class="ml-2 pl-2 border-l border-gray-200">
+          <a href="/account" class="flex items-center gap-2 py-2 px-3.5 rounded-full text-sm font-bold border transition-all duration-300 hover:shadow-sm <%= activePage === 'account' ? 'bg-slate-900 border-slate-900 text-white' : 'bg-white border-gray-200 text-slate-700 hover:border-slate-900 hover:text-slate-900' %>">
+            <div class="w-6 h-6 rounded-full bg-indigo-50 border border-indigo-100 flex items-center justify-center overflow-hidden shrink-0">
+              <svg class="w-3.5 h-3.5 text-indigo-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            </div>
+            <span>Account</span>
           </a>
         </li>
 
-        <li>
-          <a href="/favourate" class="py-2 px-4 rounded-full transition-all duration-300 block hover:-translate-y-1 <%=activePage==='favourate' ? 'bg-red-500 text-white shadow-md':'hover:bg-gray-100 text-gray-700' %>">
-            ❤️ Favourate
-          </a>
-        </li>
-      <%}%>
-      <%if(user.userType==='host') {%>
-        <li>
-          <a href="/host/host-home-list" class="py-2 px-4 rounded-full transition-all duration-300 block hover:-translate-y-1 <%=activePage==='homeHostList' ? 'bg-red-500 text-white shadow-md':'hover:bg-gray-100 text-gray-700' %>">
-            👤 Host Home
-          </a>
-        </li>
-
-        <li>
-          <a href="/host/add-home" class="py-2 px-4 rounded-full transition-all duration-300 block hover:-translate-y-1 <%=activePage==='add-Home' ? 'bg-red-500 text-white shadow-md':'hover:bg-gray-100 text-gray-700' %>">
-            ➕ Add Home
-          </a>
-        </li>
-       <%}%>
         <li>
           <form method="post" action="/logout" class="inline">
-            <button type="submit" class="py-2 px-6 rounded-full transition-all duration-300 block hover:-translate-y-1 <%=activePage==='login' ? 'bg-red-500 text-white shadow-md':'hover:bg-gray-100 text-gray-700' %>">
-              🚪 LogOut
+            <button type="submit" class="group flex items-center gap-2 py-2.5 px-4 rounded-full text-sm font-bold text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-all duration-300 cursor-pointer">
+              <svg class="w-4 h-4 text-current transform group-hover:translate-x-0.5 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" /></svg>
+              Log Out
             </button>
           </form>
         </li>
       <% } %>
 
-      <% if(!isLoggedIn){%>
+      <% if(!isLoggedIn) { %>
         <li>
-          <a href="/login" class="py-2 px-6 rounded-full transition-all duration-300 block hover:-translate-y-1 <%=activePage==='login' ? 'bg-red-500 text-white shadow-md':'hover:bg-gray-100 text-gray-700' %>">
-            🔐 Login
+          <a href="/login" class="flex items-center gap-2 py-2.5 px-5 rounded-full text-sm font-bold transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 <%= activePage === 'login' ? 'bg-slate-900 text-white shadow-md' : 'text-slate-700 hover:text-slate-900 hover:bg-white' %>">
+            Sign In
           </a>
         </li>
         <li>
-          <a href="/singup"  class="py-2 px-6 rounded-full transition-all duration-300 block hover:-translate-y-1 <%=activePage==='singup' ? 'bg-red-500 text-white shadow-md':'hover:bg-gray-100 text-gray-700' %>">
-            📝 SingUp
+          <a href="/singup" class="flex items-center gap-2 py-2.5 px-5 rounded-full text-sm font-bold tracking-wide text-white bg-indigo-600 shadow-md shadow-indigo-500/20 hover:bg-indigo-700 hover:shadow-lg hover:shadow-indigo-500/30 transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 <%= activePage === 'singup' ? 'ring-2 ring-indigo-500 ring-offset-2' : '' %>">
+            Get Started
           </a>
         </li>
       <% } %>

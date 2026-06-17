@@ -2,6 +2,8 @@ const homeModel = require("../models/home");
 const favourateModel = require("../models/favourate");
 const UserModel = require("../models/User");
 const { getHomeBookings } = require("../utils/getLatestBookingDataUsingHomeId");
+const { mongoose } = require("mongoose");
+const bookingModel = require("../models/bookingModel");
 
 exports.getHome = (req, res, next) => {
   res.render("host/addHome", {
@@ -50,9 +52,14 @@ exports.checkout = async (req, res, next) => {
     return next(error);
   }
 };
-exports.bookings = (req, res, next) => {
-  console.log("session", req.session);
+exports.bookings = async(req, res, next) => {
+  const userId = req.session.user.id;
+const userIdObj=new mongoose.Types.ObjectId(userId)
+const bookings=await bookingModel.find({userId:userIdObj})
+
+  console.log("session",bookings );
   res.render("./store/bookings", {
+    bookings,
     pageTitle: "Bookings",
     isLoggedIn: req.session.isLoggedIn,
     activePage: "bookings",

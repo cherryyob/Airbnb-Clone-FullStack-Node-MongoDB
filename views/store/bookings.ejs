@@ -23,41 +23,97 @@
 
     <div class="max-w-5xl mx-auto space-y-6">
       
-      <% const dummyBookings = [
-        { name: 'Radhey House', price: '450', date: 'May 12, 2026', status: 'Confirmed', guests: 2, photo: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80' },
-        { name: 'Gangesh Home New', price: '320', date: 'June 05, 2026', status: 'Pending', guests: 4, photo: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80' }
-      ] %>
-
-      <% dummyBookings.forEach((booking, index) => { %>
-        <div class="booking-card bg-white rounded-[2rem] shadow-lg border border-gray-100 overflow-hidden flex flex-col md:flex-row items-center p-4 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
-             style="animation-delay: <%= index * 150 %>ms">
+      <% if (typeof bookings !== 'undefined' && bookings.length > 0) { %>
+        <% bookings.forEach((booking, index) => { %>
           
-          <div class="w-full md:w-48 h-32 rounded-2xl overflow-hidden mb-4 md:mb-0">
-            <img src="<%= booking.photo %>" class="w-full h-full object-cover">
-          </div>
+          <div class="booking-card bg-white rounded-[2rem] shadow-lg border border-gray-100 overflow-hidden flex flex-col md:flex-row items-center p-4 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
+               style="animation-delay: <%= index * 150 %>ms">
+            
+            <div class="w-full md:w-48 h-32 rounded-2xl overflow-hidden mb-4 md:mb-0 bg-gray-200 flex items-center justify-center shrink-0">
+              <% if (booking.homeImage) { %>
+                <img src="<%= booking.homeImage %>" class="w-full h-full object-cover">
+              <% } else { %>
+                <div class="text-center p-2">
+                  <span class="block text-xl">🏠</span>
+                  <span class="text-gray-400 text-[10px] font-bold font-mono tracking-wider uppercase">Image Placeholder</span>
+                </div>
+              <% } %>
+            </div>
 
-          <div class="flex-1 md:ml-8 text-center md:text-left">
-            <h2 class="text-2xl font-black text-gray-800"><%= booking.name %></h2>
-            <div class="flex flex-wrap justify-center md:justify-start gap-4 mt-2">
-              <p class="text-gray-500 font-medium">📅 <%= booking.date %></p>
-              <p class="text-gray-500 font-medium">👥 <%= booking.guests %> Guests</p>
+            <div class="flex-1 md:ml-8 text-center md:text-left space-y-2">
+              <h2 class="text-2xl font-black text-gray-800">
+                <%= booking.homeName ? booking.homeName : 'Property ID: ' + booking.homeId %>
+              </h2>
+              
+              <div class="flex flex-wrap justify-center md:justify-start gap-x-6 gap-y-2 text-sm">
+                <p class="text-gray-500 font-medium">
+                  <span class="mr-1">🛫</span> 
+                  <strong>Check-in:</strong> 
+                  <%= booking.bookingDate && booking.bookingDate.checkIn ? new Date(booking.bookingDate.checkIn).toLocaleDateString() : 'N/A' %>
+                </p>
+
+                <p class="text-gray-500 font-medium">
+                  <span class="mr-1">🛬</span> 
+                  <strong>Check-out:</strong> 
+                  <%= booking.bookingDate && booking.bookingDate.checkOut ? new Date(booking.bookingDate.checkOut).toLocaleDateString() : 'N/A' %>
+                </p>
+
+                <p class="text-gray-500 font-medium">
+                  <span class="mr-1">🌙</span> 
+                  <strong>Nights:</strong> <%= booking.nights %>
+                </p>
+              </div>
+
+              <div class="flex flex-wrap justify-center md:justify-start gap-2 pt-1">
+                <span class="inline-flex items-center px-3 py-1 rounded-xl bg-gray-100 border border-gray-200 text-xs font-bold text-gray-700">
+                  <span class="mr-1.5 text-sm">🧑‍💼</span> 
+                  <%= booking.member ? booking.member.adults : 0 %> Adults
+                </span>
+
+                <span class="inline-flex items-center px-3 py-1 rounded-xl bg-red-50 border border-red-100 text-xs font-bold text-red-600">
+                  <span class="mr-1.5 text-sm">🧒</span> 
+                  <%= booking.member ? booking.member.kids : 0 %> Kids
+                </span>
+              </div>
+
+              <% if (booking.conflict && booking.conflict.loggedAt) { %>
+                <p class="text-xs text-gray-400 font-medium pt-1">
+                  ⏳ <strong>Booked on:</strong> 
+                  <%= new Date(booking.conflict.loggedAt).toLocaleDateString() %> at <%= new Date(booking.conflict.loggedAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) %>
+                </p>
+              <% } %>
+
+              <p class="text-gray-400 font-mono text-[11px]">Payment ID: <%= booking.razorpayPaymentId %></p>
+            </div>
+
+            <div class="md:text-right p-4 w-full md:w-auto border-t md:border-t-0 md:border-l border-gray-100 flex flex-row md:flex-col justify-between items-center md:items-end gap-4">
+              <div class="flex flex-col md:items-end">
+                <span class="text-xs text-gray-400 font-bold tracking-wider uppercase">Total Paid</span>
+                <span class="text-2xl font-black text-red-500">
+                  ₹<%= booking.amount %>
+                </span>
+              </div>
+              
+              <span class="px-4 py-1 rounded-full text-sm font-bold <%= booking.boookingStatus === 'Confirm' ? 'bg-green-100 text-green-600' : 'bg-yellow-100 text-yellow-600' %>">
+                <%= booking.boookingStatus %>
+              </span>
+            </div>
+
+            <div class="md:ml-6 w-full md:w-auto mt-4 md:mt-0">
+              <a href="/bookings/<%= booking._id %>" class="block text-center bg-gray-900 text-white px-6 py-3 rounded-xl font-bold hover:bg-red-500 transition-all duration-300 shadow-md whitespace-nowrap">
+                Details
+              </a>
             </div>
           </div>
 
-          <div class="md:text-right p-4 w-full md:w-auto border-t md:border-t-0 md:border-l border-gray-100 flex flex-row md:flex-col justify-between items-center md:items-end gap-2">
-            <span class="text-2xl font-black text-red-500">$<%= booking.price %></span>
-            <span class="px-4 py-1 rounded-full text-sm font-bold <%= booking.status === 'Confirmed' ? 'bg-green-100 text-green-600' : 'bg-yellow-100 text-yellow-600' %>">
-              <%= booking.status %>
-            </span>
-          </div>
-
-          <div class="md:ml-6">
-            <a href="/" class="block bg-gray-900 text-white px-6 py-3 rounded-xl font-bold hover:bg-red-500 transition-all duration-300 shadow-md">
-              Details
-            </a>
-          </div>
+        <% }) %>
+      <% } else { %>
+        <div class="text-center py-16 bg-white rounded-[2.5rem] shadow-md border border-gray-100">
+          <div class="text-5xl mb-4">🧳</div>
+          <h3 class="text-xl font-bold text-gray-700">No bookings found</h3>
+          <p class="text-gray-400 mt-1">Looks like your account doesn't have any stays listed yet.</p>
         </div>
-      <% }) %>
+      <% } %>
 
     </div>
 
